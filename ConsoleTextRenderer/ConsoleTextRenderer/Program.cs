@@ -10,6 +10,8 @@ namespace ConsoleTextRenderer
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Work");
+            Console.ReadKey();
         }
     }
 }
