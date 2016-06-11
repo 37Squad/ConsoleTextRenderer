@@ -11,6 +11,7 @@ namespace ConsoleTextRenderer
         static void Main(string[] args)
         {
             Console.WriteLine("Work");
+            Console.WriteLine("Please?");
             Console.ReadKey();
         }
     }
