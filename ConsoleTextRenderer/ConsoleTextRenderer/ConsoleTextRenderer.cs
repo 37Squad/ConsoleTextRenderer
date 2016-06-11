@@ -12,7 +12,7 @@ namespace ConsoleTextRenderer
         [STAThread]
         static void Main(string[] args)
         {
-            Graphics graphics = new Graphics(0, 0, 768, 768);
+            Graphics graphics = new Graphics(0, 0, 768, 768,60);
         }
     }
 }
