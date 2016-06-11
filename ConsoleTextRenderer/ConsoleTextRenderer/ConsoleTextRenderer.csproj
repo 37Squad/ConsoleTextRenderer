@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Glyph.cs" />
     <Compile Include="GlyphManager.cs" />
     <Compile Include="Graphics.cs" />
     <Compile Include="ConsoleTextRenderer.cs" />
