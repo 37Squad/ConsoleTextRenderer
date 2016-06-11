@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ConsoleTextRenderer
 {
-    class Program
+    class ConsoleTextRenderer
     {
+        //STAThread exists to explicitly declare the entry point of a program
+        [STAThread]
         static void Main(string[] args)
         {
-            Console.WriteLine("Work");
-            Console.WriteLine("Please?");
-            Console.ReadKey();
+            Graphics graphics = new Graphics(0, 0, 768, 768);
         }
     }
 }
