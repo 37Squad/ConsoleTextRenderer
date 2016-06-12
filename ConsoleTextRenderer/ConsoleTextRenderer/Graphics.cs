@@ -64,6 +64,7 @@ namespace ConsoleTextRenderer
             (0.0D,1.0D)------------(1.0D,1.0D)
             */
             GL.Ortho(0.0D, 1.0D, 1.0D, 0.0D, 0.0D, 1.0D);
+         
 
             //Turn on 2D texture capability
             GL.Enable(EnableCap.Texture2D);
@@ -81,15 +82,15 @@ namespace ConsoleTextRenderer
             //Bind
             GL.BindTexture(TextureTarget.Texture2D, id);
             //Set texture parameters
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
             //Generate texture
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bmp_data.Width, bmp_data.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmp_data.Scan0);
             //Unlock our bitmap
             glyphMap.UnlockBits(bmp_data);
-            //Clear our Screen
-            GL.Clear(ClearBufferMask.ColorBufferBit);
-            GL.ClearColor(Color.Black);
+            //DEBUG
+            GL.BindTexture(TextureTarget.Texture2D, 0);
+        
         }
 
         //Called every frame; update logic here
@@ -99,13 +100,29 @@ namespace ConsoleTextRenderer
             if (keyboardState[Key.Escape]) this.window.Close();
             if (keyboardState[Key.A])
             {
-                this.glyphManager.WriteGlyph(Glyph.GLYPH_a);
+                this.glyphManager.WriteGlyph(Glyph.GLYPH_A);
             }
         }
 
         //Called every frame; its only purpose is to draw
         private void Draw(object sender,object param)
         {
+            GL.Clear(ClearBufferMask.ColorBufferBit);
+            GL.ClearColor(Color.White);
+
+            //DEBUG TRIANGLE
+            GL.Begin(PrimitiveType.Triangles);
+            GL.Vertex3(0.0f, 0.0f, 0.0f);
+            GL.Normal3(0.0f, 0.0f, -1.0f);
+            GL.Color3(1.0f, 0.0f, 0.0f);
+            GL.Vertex3(1.0f, 0.0f, 0.0f);
+            GL.Normal3(0.0f, 0.0f, -1.0f);
+            GL.Color3(0.0f, 1.0f, 0.0f);
+            GL.Vertex3(0.0f, 1.0f, 0.0f);
+            GL.Normal3(0.0f, 0.0f, -1.0f);
+            GL.Color3(0.0f, 0.0f, 1.0f);
+            GL.End();
+
             this.renderQueue.RenderAll();
             //Wait for all OpenGL operations to complete
             GL.Finish();

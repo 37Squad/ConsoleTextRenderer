@@ -34,7 +34,7 @@ namespace ConsoleTextRenderer
                 for(int position = 0; position < glyphs.GetMaxCharacters();position++)
                 {
                     Glyph currentGlyph = glyphs.GetGlyphs()[line,position];
-                    if (currentGlyph == Glyph.GLYPH_NULL)
+                    if (currentGlyph == Glyph.GLYPH_NULL || currentGlyph == null)
                     {
                         continue;
                     }
@@ -42,14 +42,20 @@ namespace ConsoleTextRenderer
                     {
                         //glyphWidth ang glyphHeight will also work for the UV coords, coincidentally
                         GL.Begin(PrimitiveType.Quads);
+
                         GL.Vertex3(glyphX, glyphY, 1.0f);
-                        GL.TexCoord2(currentGlyph.U0, currentGlyph.V0);
+                        //GL.Color3(1.0f, 0.0f, 0.0f);
+                        //GL.TexCoord2(currentGlyph.U0, currentGlyph.V0);
                         GL.Vertex3(glyphX + glyphs.glyphWidth, glyphY, 1.0f);
-                        GL.TexCoord2(currentGlyph.U0 + GlyphManager.glyphUVWidth, currentGlyph.V0);
+                        //GL.Color3(1.0f, 0.0f, 0.0f);
+                        //GL.TexCoord2(currentGlyph.U0 + GlyphManager.glyphUVWidth, currentGlyph.V0);
                         GL.Vertex3(glyphX, glyphY + glyphs.glyphHeight, 1.0f);
-                        GL.TexCoord2(currentGlyph.U0, currentGlyph.V0 - GlyphManager.glyphUVHeight);
+                        //GL.Color3(1.0f, 0.0f, 0.0f);
+                        //GL.TexCoord2(currentGlyph.U0, currentGlyph.V0 - GlyphManager.glyphUVHeight);
                         GL.Vertex3(glyphX + glyphs.glyphWidth, glyphY + glyphs.glyphHeight, 1.0f);
-                        GL.TexCoord2(currentGlyph.U0 + GlyphManager.glyphUVWidth, currentGlyph.V0 - GlyphManager.glyphUVHeight);
+                        //GL.Color3(1.0f, 0.0f, 0.0f);
+                        //GL.TexCoord2(currentGlyph.U0 + GlyphManager.glyphUVWidth, currentGlyph.V0 - GlyphManager.glyphUVHeight);
+
                         GL.End();
                     }
 

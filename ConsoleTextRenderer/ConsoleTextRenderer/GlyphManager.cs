@@ -81,10 +81,14 @@ namespace ConsoleTextRenderer
         //Write a glyph to the list
         public void WriteGlyph(Glyph glyph)
         {
-            this.glyphs[glyphLine,glyphPos] = glyph;
             if (glyphPos >= this.maxCharacters)
             {
                 glyphLine++;
+                glyphPos = 0;
+            }
+            else
+            {
+                this.glyphs[glyphLine, glyphPos] = glyph;
             }
             if (glyphLine >= this.maxLines)
             {
@@ -93,6 +97,7 @@ namespace ConsoleTextRenderer
                 //For now...
                 this.ClearGlpyhs();
             }
+            glyphPos++;
         }
 
         public RenderManager getRenderManager()
