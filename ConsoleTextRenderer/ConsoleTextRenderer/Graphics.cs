@@ -34,6 +34,9 @@ namespace ConsoleTextRenderer
             this.window.UpdateFrame += this.Update;
             this.window.RenderFrame += this.Draw;
             this.window.Resize      += this.Resize;
+
+            //Start it up!
+            this.window.Run(refreshRate);
         }
 
         //Called on window creation
@@ -59,6 +62,10 @@ namespace ConsoleTextRenderer
             //Use this blending function
             //It does not modify the output value in any way
             GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.One);
+
+            //Clear our Screen
+            GL.Clear(ClearBufferMask.ColorBufferBit);
+            GL.ClearColor(Color.Black);
         }
 
         //Called every frame; update logic here
@@ -72,6 +79,8 @@ namespace ConsoleTextRenderer
         {
             //Wait for all OpenGL operations to complete
             GL.Finish();
+            //Now swap buffers
+            this.window.SwapBuffers();
         }
 
         //Called on a window resize

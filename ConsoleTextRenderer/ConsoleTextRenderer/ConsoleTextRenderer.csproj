@@ -71,11 +71,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity.cs" />
     <Compile Include="Glyph.cs" />
     <Compile Include="GlyphManager.cs" />
     <Compile Include="Graphics.cs" />
     <Compile Include="ConsoleTextRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderable.cs" />
+    <Compile Include="RenderGlyphs.cs" />
+    <Compile Include="RenderManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

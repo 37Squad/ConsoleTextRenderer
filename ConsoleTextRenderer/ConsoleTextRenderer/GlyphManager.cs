@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleTextRenderer
 {
-    class GlyphManager
+    class GlyphManager : Entity
     {
         //'glyphPos' and 'glyphLine' are indexes for the 'glyphs' array
         //holds current glpyh position in the current line
@@ -15,6 +15,9 @@ namespace ConsoleTextRenderer
         private int glyphLine = 0;
         //this is the array that contains the glpyh data
         private Glyph[][] glyphs = null;
+        //this is a glpyh lookup table- convert chars into its equivalent glyph
+        //Not used currently - not sure if we need it
+        private Dictionary<char, Glyph> glyphLookupTable = new Dictionary<char, Glyph>();
         //max lines
         private int maxLines = 0;
         //max characters per line
@@ -39,6 +42,11 @@ namespace ConsoleTextRenderer
         {
             return this.maxCharacters;
         }
+        
+        public Glyph[][] GetGlyphs()
+        {
+            return this.glyphs;
+        }
 
         //Reset all glyphs
         public void ClearGlpyhs()
@@ -49,7 +57,7 @@ namespace ConsoleTextRenderer
                 for(int y = 0; y < this.maxCharacters;y++)
                 {
                     //this is the NULL character - we will use it to indicate that there is no glyph stored here
-                    this.glyphs[x][y] = Glyph.GLYPH_EMPTY;
+                    this.glyphs[x][y] = Glyph.GLYPH_NULL;
                 }
             }
 
@@ -58,15 +66,15 @@ namespace ConsoleTextRenderer
             this.glyphPos   = 0;
         }
 
-        //Write a glyph
-        public void WriteChar(char character)
+        //Write a glyph to the list
+        public void WriteGlyph(Glyph glyph)
         {
-            this.glyphs[glyphLine][glyphPos++] = new Glyph(character);
-            if(glyphPos >= this.maxCharacters)
+            this.glyphs[glyphLine][glyphPos] = glyph;
+            if (glyphPos >= this.maxCharacters)
             {
                 glyphLine++;
             }
-            if(glyphLine >= this.maxLines)
+            if (glyphLine >= this.maxLines)
             {
                 //What do we do with an overflow? I don't know!
                 //Clear it!
@@ -75,14 +83,9 @@ namespace ConsoleTextRenderer
             }
         }
 
-        //Basically a wrapper for WriteChar
-        public void WriteString(String characters)
+        public RenderManager getRenderManager()
         {
-            foreach(char character in characters)
-            {
-                this.WriteChar(character);
-            }
+            return RenderManager.glyph_renderManager;
         }
-
     }
 }
