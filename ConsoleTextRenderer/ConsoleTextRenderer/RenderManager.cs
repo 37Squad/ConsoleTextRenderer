@@ -12,7 +12,7 @@ namespace ConsoleTextRenderer
         public static RenderManager glyph_renderManager = new RenderManager(new RenderGlyphs());
 
         //This RenderManagers renderer
-        private IRenderable renderer;
+        public IRenderable renderer;
 
         public RenderManager(IRenderable _renderer)
         {

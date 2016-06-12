@@ -29,11 +29,11 @@ namespace ConsoleTextRenderer
             //Remember, screenspace is 0.0f -> 1.0f left to right, and 0.0f -> 1.0f up to down
             float glyphX = 0.0f, glyphY = 0.0f;
             
-            for (int line = 0; line < glyphs.GetGlyphs().Length;line++)
+            for (int line = 0; line < glyphs.GetMaxLines();line++)
             {
-                for(int position = 0; position < glyphs.GetGlyphs()[0].Length;position++)
+                for(int position = 0; position < glyphs.GetMaxCharacters();position++)
                 {
-                    Glyph currentGlyph = glyphs.GetGlyphs()[line][position];
+                    Glyph currentGlyph = glyphs.GetGlyphs()[line,position];
                     if (currentGlyph == Glyph.GLYPH_NULL)
                     {
                         continue;
@@ -44,19 +44,19 @@ namespace ConsoleTextRenderer
                         GL.Begin(PrimitiveType.Quads);
                         GL.Vertex3(glyphX, glyphY, 1.0f);
                         GL.TexCoord2(currentGlyph.U0, currentGlyph.V0);
-                        GL.Vertex3(glyphX + Glyph.glyphWidth, glyphY, 1.0f);
-                        GL.TexCoord2(currentGlyph.U0 + Glyph.glyphWidth, currentGlyph.V0);
-                        GL.Vertex3(glyphX, glyphY + Glyph.glyphHeight, 1.0f);
-                        GL.TexCoord2(currentGlyph.U0, currentGlyph.V0 - Glyph.glyphHeight);
-                        GL.Vertex3(glyphX + Glyph.glyphWidth, glyphY + Glyph.glyphHeight, 1.0f);
-                        GL.TexCoord2(currentGlyph.U0 + Glyph.glyphWidth, currentGlyph.V0 - Glyph.glyphHeight);
+                        GL.Vertex3(glyphX + glyphs.glyphWidth, glyphY, 1.0f);
+                        GL.TexCoord2(currentGlyph.U0 + GlyphManager.glyphUVWidth, currentGlyph.V0);
+                        GL.Vertex3(glyphX, glyphY + glyphs.glyphHeight, 1.0f);
+                        GL.TexCoord2(currentGlyph.U0, currentGlyph.V0 - GlyphManager.glyphUVHeight);
+                        GL.Vertex3(glyphX + glyphs.glyphWidth, glyphY + glyphs.glyphHeight, 1.0f);
+                        GL.TexCoord2(currentGlyph.U0 + GlyphManager.glyphUVWidth, currentGlyph.V0 - GlyphManager.glyphUVHeight);
                         GL.End();
                     }
 
-                    glyphX += Glyph.glyphWidth;
+                    glyphX += glyphs.glyphWidth;
                 }
 
-                glyphY += Glyph.glyphHeight;
+                glyphY += glyphs.glyphHeight;
             }
         }
     }

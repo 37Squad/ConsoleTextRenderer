@@ -14,7 +14,7 @@ namespace ConsoleTextRenderer
         //holds current glyph line
         private int glyphLine = 0;
         //this is the array that contains the glpyh data
-        private Glyph[][] glyphs = null;
+        private Glyph[,] glyphs = null;
         //this is a glpyh lookup table- convert chars into its equivalent glyph
         //Not used currently - not sure if we need it
         private Dictionary<char, Glyph> glyphLookupTable = new Dictionary<char, Glyph>();
@@ -23,11 +23,23 @@ namespace ConsoleTextRenderer
         //max characters per line
         private int maxCharacters = 0;
 
+        //Pixels / image dimension
+        public const float glyphUVWidth = 16.0F / glyphMapWidth;
+        public const float glyphUVHeight = 16.0F / glyphMapHeight;
+        //image dimension shouldn't be changed...
+        public const float glyphMapWidth = 512.0F;
+        public const float glyphMapHeight = 512.0F;
+        public float glyphWidth  = 1.0f;
+        public float glyphHeight = 1.0f;
+
         //Constructor
         public GlyphManager(int lines,int characters)
         {
+            this.glyphs = new Glyph[lines,characters];
             this.maxCharacters  = characters;
             this.maxLines       = lines;
+            this.glyphWidth /= this.maxCharacters;
+            this.glyphHeight = this.glyphWidth;
             this.ClearGlpyhs();
         }
 
@@ -43,7 +55,7 @@ namespace ConsoleTextRenderer
             return this.maxCharacters;
         }
         
-        public Glyph[][] GetGlyphs()
+        public Glyph[,] GetGlyphs()
         {
             return this.glyphs;
         }
@@ -57,7 +69,7 @@ namespace ConsoleTextRenderer
                 for(int y = 0; y < this.maxCharacters;y++)
                 {
                     //this is the NULL character - we will use it to indicate that there is no glyph stored here
-                    this.glyphs[x][y] = Glyph.GLYPH_NULL;
+                    this.glyphs[x,y] = Glyph.GLYPH_NULL;
                 }
             }
 
@@ -69,7 +81,7 @@ namespace ConsoleTextRenderer
         //Write a glyph to the list
         public void WriteGlyph(Glyph glyph)
         {
-            this.glyphs[glyphLine][glyphPos] = glyph;
+            this.glyphs[glyphLine,glyphPos] = glyph;
             if (glyphPos >= this.maxCharacters)
             {
                 glyphLine++;

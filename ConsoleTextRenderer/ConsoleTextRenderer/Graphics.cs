@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 //OpenTK includes ; for everything we could ever want!
 using OpenTK;
@@ -18,7 +19,12 @@ namespace ConsoleTextRenderer
     {
         //OpenTK handle object
         private GameWindow window = null;
-        //Window Data
+        //GlyphManager
+        private GlyphManager glyphManager;
+        //RenderQueue
+        private RenderQueue renderQueue;
+
+       
         public Graphics(int x,int y, int width, int height,int refreshRate)
         {
             //Create new GameWindow object with specified width and height
@@ -34,6 +40,10 @@ namespace ConsoleTextRenderer
             this.window.UpdateFrame += this.Update;
             this.window.RenderFrame += this.Draw;
             this.window.Resize      += this.Resize;
+
+            this.glyphManager = new GlyphManager(10, 40);
+            this.renderQueue = new RenderQueue();
+            this.renderQueue.AddEntity(this.glyphManager);
 
             //Start it up!
             this.window.Run(refreshRate);
@@ -61,8 +71,22 @@ namespace ConsoleTextRenderer
             GL.Enable(EnableCap.Blend);
             //Use this blending function
             //It does not modify the output value in any way
-            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.One);
-
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+            //Load our bitmap
+            Bitmap glyphMap = new Bitmap("alphabet_production.bmp");
+            BitmapData bmp_data = glyphMap.LockBits(new Rectangle(0, 0, glyphMap.Width, glyphMap.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+           
+            //OpenGL texture
+            int id = GL.GenTexture();
+            //Bind
+            GL.BindTexture(TextureTarget.Texture2D, id);
+            //Set texture parameters
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+            //Generate texture
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bmp_data.Width, bmp_data.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmp_data.Scan0);
+            //Unlock our bitmap
+            glyphMap.UnlockBits(bmp_data);
             //Clear our Screen
             GL.Clear(ClearBufferMask.ColorBufferBit);
             GL.ClearColor(Color.Black);
@@ -71,12 +95,18 @@ namespace ConsoleTextRenderer
         //Called every frame; update logic here
         private void Update(object sender, object param)
         {
-
+            var keyboardState = OpenTK.Input.Keyboard.GetState();
+            if (keyboardState[Key.Escape]) this.window.Close();
+            if (keyboardState[Key.A])
+            {
+                this.glyphManager.WriteGlyph(Glyph.GLYPH_a);
+            }
         }
 
         //Called every frame; its only purpose is to draw
         private void Draw(object sender,object param)
         {
+            this.renderQueue.RenderAll();
             //Wait for all OpenGL operations to complete
             GL.Finish();
             //Now swap buffers

@@ -80,6 +80,7 @@
     <Compile Include="Renderable.cs" />
     <Compile Include="RenderGlyphs.cs" />
     <Compile Include="RenderManager.cs" />
+    <Compile Include="RenderQueue.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
