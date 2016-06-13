@@ -27,7 +27,6 @@ namespace ConsoleTextRenderer
         private void Render_Glyphs(GlyphManager glyphs)
         {
             //Remember, screenspace is 0.0f -> 1.0f left to right, and 0.0f -> 1.0f up to down
-            float glyphX = 0.0f, glyphY = 0.0f;
             
             for (int line = 0; line < glyphs.GetMaxLines();line++)
             {
@@ -40,29 +39,28 @@ namespace ConsoleTextRenderer
                     }
                     else
                     {
-                        //glyphWidth ang glyphHeight will also work for the UV coords, coincidentally
+                        GL.Begin(PrimitiveType.Quads);
+                        GL.MatrixMode(MatrixMode.Modelview);
+                        GL.LoadIdentity();
+                       
+                        float offsetX = position * glyphs.glyphWidth;
+                        float offsetY = line * glyphs.glyphHeight;
+
+                        GL.Translate(offsetX, offsetY, 0.0f);
+                       
                         GL.Begin(PrimitiveType.Quads);
 
-                        GL.Vertex3(glyphX, glyphY, 1.0f);
-                        //GL.Color3(1.0f, 0.0f, 0.0f);
-                        //GL.TexCoord2(currentGlyph.U0, currentGlyph.V0);
-                        GL.Vertex3(glyphX + glyphs.glyphWidth, glyphY, 1.0f);
-                        //GL.Color3(1.0f, 0.0f, 0.0f);
-                        //GL.TexCoord2(currentGlyph.U0 + GlyphManager.glyphUVWidth, currentGlyph.V0);
-                        GL.Vertex3(glyphX, glyphY + glyphs.glyphHeight, 1.0f);
-                        //GL.Color3(1.0f, 0.0f, 0.0f);
-                        //GL.TexCoord2(currentGlyph.U0, currentGlyph.V0 - GlyphManager.glyphUVHeight);
-                        GL.Vertex3(glyphX + glyphs.glyphWidth, glyphY + glyphs.glyphHeight, 1.0f);
-                        //GL.Color3(1.0f, 0.0f, 0.0f);
-                        //GL.TexCoord2(currentGlyph.U0 + GlyphManager.glyphUVWidth, currentGlyph.V0 - GlyphManager.glyphUVHeight);
+                        GL.Color3(1.0f, 0.0f, 0.0f);
+                        GL.Normal3(0.0f, 0.0f, -1.0f);
+
+                        GL.Vertex3(-1.0f, -1.0f, 0.0f);
+                        GL.Vertex3(1.0f, -1.0f, 0.0f);
+                        GL.Vertex3(1.0f, 1.0f, 0.0f);
+                        GL.Vertex3(-1.0f, 1.0f, 0.0f);
 
                         GL.End();
                     }
-
-                    glyphX += glyphs.glyphWidth;
                 }
-
-                glyphY += glyphs.glyphHeight;
             }
         }
     }

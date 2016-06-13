@@ -41,7 +41,7 @@ namespace ConsoleTextRenderer
             this.window.RenderFrame += this.Draw;
             this.window.Resize      += this.Resize;
 
-            this.glyphManager = new GlyphManager(10, 40);
+            this.glyphManager = new GlyphManager(5, 32);
             this.renderQueue = new RenderQueue();
             this.renderQueue.AddEntity(this.glyphManager);
 
@@ -55,6 +55,7 @@ namespace ConsoleTextRenderer
             //Load basic OpenGL state
             //Create an orthographic projection
             GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
             /*
             Window Coordinate System
             (0.0D,0.0D)------------(1.0D,0.0D)
@@ -64,6 +65,8 @@ namespace ConsoleTextRenderer
             (0.0D,1.0D)------------(1.0D,1.0D)
             */
             GL.Ortho(0.0D, 1.0D, 1.0D, 0.0D, 0.0D, 1.0D);
+            //Switch to Modelview
+            GL.MatrixMode(MatrixMode.Modelview);
          
 
             //Turn on 2D texture capability
@@ -102,6 +105,10 @@ namespace ConsoleTextRenderer
             {
                 this.glyphManager.WriteGlyph(Glyph.GLYPH_A);
             }
+            if (keyboardState[Key.AltLeft])
+            {
+
+            }
         }
 
         //Called every frame; its only purpose is to draw
@@ -109,19 +116,6 @@ namespace ConsoleTextRenderer
         {
             GL.Clear(ClearBufferMask.ColorBufferBit);
             GL.ClearColor(Color.White);
-
-            //DEBUG TRIANGLE
-            GL.Begin(PrimitiveType.Triangles);
-            GL.Vertex3(0.0f, 0.0f, 0.0f);
-            GL.Normal3(0.0f, 0.0f, -1.0f);
-            GL.Color3(1.0f, 0.0f, 0.0f);
-            GL.Vertex3(1.0f, 0.0f, 0.0f);
-            GL.Normal3(0.0f, 0.0f, -1.0f);
-            GL.Color3(0.0f, 1.0f, 0.0f);
-            GL.Vertex3(0.0f, 1.0f, 0.0f);
-            GL.Normal3(0.0f, 0.0f, -1.0f);
-            GL.Color3(0.0f, 0.0f, 1.0f);
-            GL.End();
 
             this.renderQueue.RenderAll();
             //Wait for all OpenGL operations to complete
