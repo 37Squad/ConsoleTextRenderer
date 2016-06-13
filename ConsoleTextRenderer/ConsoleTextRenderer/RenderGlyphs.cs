@@ -39,15 +39,16 @@ namespace ConsoleTextRenderer
                     }
                     else
                     {
-                        GL.Begin(PrimitiveType.Quads);
                         GL.MatrixMode(MatrixMode.Modelview);
+                        GL.PushMatrix();
                         GL.LoadIdentity();
                        
                         float offsetX = position * glyphs.glyphWidth;
                         float offsetY = line * glyphs.glyphHeight;
 
-                        GL.Translate(offsetX, offsetY, 0.0f);
-                       
+                        GL.Translate(offsetX, offsetY,0.0f);
+                        GL.Scale(glyphs.glyphWidth, glyphs.glyphHeight, 1.0f);
+
                         GL.Begin(PrimitiveType.Quads);
 
                         GL.Color3(1.0f, 0.0f, 0.0f);
@@ -59,6 +60,7 @@ namespace ConsoleTextRenderer
                         GL.Vertex3(-1.0f, 1.0f, 0.0f);
 
                         GL.End();
+                        GL.PopMatrix();
                     }
                 }
             }

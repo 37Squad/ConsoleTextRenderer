@@ -67,7 +67,7 @@ namespace ConsoleTextRenderer
             GL.Ortho(0.0D, 1.0D, 1.0D, 0.0D, 0.0D, 1.0D);
             //Switch to Modelview
             GL.MatrixMode(MatrixMode.Modelview);
-         
+            GL.LoadIdentity();
 
             //Turn on 2D texture capability
             GL.Enable(EnableCap.Texture2D);
@@ -93,7 +93,6 @@ namespace ConsoleTextRenderer
             glyphMap.UnlockBits(bmp_data);
             //DEBUG
             GL.BindTexture(TextureTarget.Texture2D, 0);
-        
         }
 
         //Called every frame; update logic here
@@ -114,6 +113,7 @@ namespace ConsoleTextRenderer
         //Called every frame; its only purpose is to draw
         private void Draw(object sender,object param)
         {
+            //Clear Screen
             GL.Clear(ClearBufferMask.ColorBufferBit);
             GL.ClearColor(Color.White);
 
