@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleTextRenderer
+namespace ConsoleTextRenderer.Main
 {
-    class ConsoleTextRenderer
+    class Application
     {
         //STAThread exists to explicitly declare the entry point of a program
         [STAThread]
         static void Main(string[] args)
         {
-            Graphics graphics = new Graphics(0, 0, 768, 768,60);
+            ConsoleTextRenderer graphics = new ConsoleTextRenderer(0, 0, 768, 768,60);
         }
     }
 }

@@ -71,16 +71,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entity.cs" />
-    <Compile Include="Glyph.cs" />
-    <Compile Include="GlyphManager.cs" />
-    <Compile Include="Graphics.cs" />
-    <Compile Include="ConsoleTextRenderer.cs" />
+    <Compile Include="Systems\Entity.cs" />
+    <Compile Include="Systems\Glyph.cs" />
+    <Compile Include="Systems\GlyphManager.cs" />
+    <Compile Include="Main\ConsoleTextRenderer.cs" />
+    <Compile Include="Main\Application.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renderable.cs" />
-    <Compile Include="RenderGlyphs.cs" />
-    <Compile Include="RenderManager.cs" />
-    <Compile Include="RenderQueue.cs" />
+    <Compile Include="Render\Renderable.cs" />
+    <Compile Include="Render\RenderGlyphs.cs" />
+    <Compile Include="Systems\RenderManager.cs" />
+    <Compile Include="Render\RenderQueue.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -96,6 +96,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Graphics\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

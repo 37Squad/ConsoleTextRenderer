@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleTextRenderer
+namespace ConsoleTextRenderer.Render
 {
     //Interface for rendering Entities
     //'obj' is the object you want to render

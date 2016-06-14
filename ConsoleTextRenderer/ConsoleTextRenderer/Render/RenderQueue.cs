@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleTextRenderer
+namespace ConsoleTextRenderer.Render
 {
     class RenderQueue
     {
         //List of renderable entities
-        List<Entity> renderableEntities;
+        List<Systems.Entity> renderableEntities;
         public RenderQueue()
         {
-            this.renderableEntities = new List<Entity>();
+            this.renderableEntities = new List<Systems.Entity>();
         }
 
-        public void AddEntity(Entity entity)
+        public void AddEntity(Systems.Entity entity)
         {
             this.renderableEntities.Add(entity);
         }
@@ -27,7 +27,7 @@ namespace ConsoleTextRenderer
 
         public void RenderAll()
         {
-            foreach(Entity entity in this.renderableEntities)
+            foreach(Systems.Entity entity in this.renderableEntities)
             {
                 entity.getRenderManager().renderer.Render(entity);
             }
