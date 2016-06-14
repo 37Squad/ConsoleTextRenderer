@@ -40,6 +40,7 @@ namespace ConsoleTextRenderer
             this.window.UpdateFrame += this.Update;
             this.window.RenderFrame += this.Draw;
             this.window.Resize      += this.Resize;
+            this.window.KeyUp       += this.KeyboardKeyUp;
 
             this.glyphManager = new GlyphManager(5, 32);
             this.renderQueue = new RenderQueue();
@@ -77,8 +78,8 @@ namespace ConsoleTextRenderer
             //It does not modify the output value in any way
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             //Load our bitmap
-            Bitmap glyphMap = new Bitmap("alphabet_production.bmp");
-            BitmapData bmp_data = glyphMap.LockBits(new Rectangle(0, 0, glyphMap.Width, glyphMap.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Bitmap glyphMap = new Bitmap("alphabet_production_24bpp.bmp");
+            BitmapData bmp_data = glyphMap.LockBits(new Rectangle(0, 0, glyphMap.Width, glyphMap.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
            
             //OpenGL texture
             int id = GL.GenTexture();
@@ -88,26 +89,17 @@ namespace ConsoleTextRenderer
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
             //Generate texture
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bmp_data.Width, bmp_data.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmp_data.Scan0);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb8, bmp_data.Width, bmp_data.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, bmp_data.Scan0);
             //Unlock our bitmap
             glyphMap.UnlockBits(bmp_data);
             //DEBUG
-            GL.BindTexture(TextureTarget.Texture2D, 0);
+            //GL.BindTexture(TextureTarget.Texture2D, 0);
         }
 
         //Called every frame; update logic here
         private void Update(object sender, object param)
         {
-            var keyboardState = OpenTK.Input.Keyboard.GetState();
-            if (keyboardState[Key.Escape]) this.window.Close();
-            if (keyboardState[Key.A])
-            {
-                this.glyphManager.WriteGlyph(Glyph.GLYPH_A);
-            }
-            if (keyboardState[Key.AltLeft])
-            {
-
-            }
+         
         }
 
         //Called every frame; its only purpose is to draw
@@ -117,6 +109,7 @@ namespace ConsoleTextRenderer
             GL.Clear(ClearBufferMask.ColorBufferBit);
             GL.ClearColor(Color.White);
 
+            //Render all of our objects
             this.renderQueue.RenderAll();
             //Wait for all OpenGL operations to complete
             GL.Finish();
@@ -128,6 +121,170 @@ namespace ConsoleTextRenderer
         private void Resize(object sender, object param)
         {
 
+        }
+
+        private void KeyboardKeyUp(object sender, KeyboardKeyEventArgs param)
+        {
+            switch(param.Key)
+            {
+                case Key.A:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_A);
+                        break;
+                    }
+
+                case Key.B:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_B);
+                        break;
+                    }
+
+                case Key.C:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_C);
+                        break;
+                    }
+
+                case Key.D:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_D);
+                        break;
+                    }
+
+                case Key.E:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_E);
+                        break;
+                    }
+
+                case Key.F:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_F);
+                        break;
+                    }
+
+                case Key.G:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_G);
+                        break;
+                    }
+
+                case Key.H:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_H);
+                        break;
+                    }
+
+                case Key.I:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_I);
+                        break;
+                    }
+
+                case Key.J:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_J);
+                        break;
+                    }
+
+                case Key.K:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_K);
+                        break;
+                    }
+
+                case Key.L:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_L);
+                        break;
+                    }
+
+                case Key.M:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_M);
+                        break;
+                    }
+
+                case Key.N:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_N);
+                        break;
+                    }
+
+                case Key.O:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_O);
+                        break;
+                    }
+
+                case Key.P:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_P);
+                        break;
+                    }
+
+                case Key.Q:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_Q);
+                        break;
+                    }
+
+                case Key.R:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_R);
+                        break;
+                    }
+
+                case Key.S:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_S);
+                        break;
+                    }
+
+                case Key.T:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_T);
+                        break;
+                    }
+
+                case Key.U:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_U);
+                        break;
+                    }
+
+                case Key.V:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_V);
+                        break;
+                    }
+
+                case Key.W:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_W);
+                        break;
+                    }
+
+                case Key.X:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_X);
+                        break;
+                    }
+
+                case Key.Y:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_Y);
+                        break;
+                    }
+
+                case Key.Z:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_Z);
+                        break;
+                    }
+
+                default: break;
+            }
         }
     }
 }

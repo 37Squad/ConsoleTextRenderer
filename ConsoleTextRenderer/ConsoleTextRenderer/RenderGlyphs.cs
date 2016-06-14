@@ -43,21 +43,26 @@ namespace ConsoleTextRenderer
                         GL.PushMatrix();
                         GL.LoadIdentity();
                        
-                        float offsetX = position * glyphs.glyphWidth;
-                        float offsetY = line * glyphs.glyphHeight;
+                        float offsetX = 2 * position * glyphs.glyphWidth - glyphs.glyphWidth;
+                        float offsetY = 2 * line * glyphs.glyphHeight + glyphs.glyphHeight;
 
                         GL.Translate(offsetX, offsetY,0.0f);
                         GL.Scale(glyphs.glyphWidth, glyphs.glyphHeight, 1.0f);
+                        GL.Rotate(-90.0f, 0.0f, 0.0f, 1.0f);
 
                         GL.Begin(PrimitiveType.Quads);
 
-                        GL.Color3(1.0f, 0.0f, 0.0f);
-                        GL.Normal3(0.0f, 0.0f, -1.0f);
-
                         GL.Vertex3(-1.0f, -1.0f, 0.0f);
+                        GL.TexCoord2(currentGlyph.U0, currentGlyph.V0);
+
                         GL.Vertex3(1.0f, -1.0f, 0.0f);
+                        GL.TexCoord2(currentGlyph.U0 + GlyphManager.glyphUVWidth, currentGlyph.V0);
+
                         GL.Vertex3(1.0f, 1.0f, 0.0f);
+                        GL.TexCoord2(currentGlyph.U0 + GlyphManager.glyphUVWidth, currentGlyph.V0 + GlyphManager.glyphUVHeight);
+
                         GL.Vertex3(-1.0f, 1.0f, 0.0f);
+                        GL.TexCoord2(currentGlyph.U0, currentGlyph.V0 + GlyphManager.glyphUVHeight);
 
                         GL.End();
                         GL.PopMatrix();

@@ -24,11 +24,11 @@ namespace ConsoleTextRenderer
         private int maxCharacters = 0;
 
         //Pixels / image dimension
-        public const float glyphUVWidth = 16.0F / glyphMapWidth;
-        public const float glyphUVHeight = 16.0F / glyphMapHeight;
+        public const float glyphUVWidth = 16.0f / 512.0f;
+        public const float glyphUVHeight = 16.0f / 512.0f;
         //image dimension shouldn't be changed...
-        public const float glyphMapWidth = 512.0F;
-        public const float glyphMapHeight = 512.0F;
+        public float glyphMapWidth = 512.0F;
+        public float glyphMapHeight = 512.0F;
         public float glyphWidth  = 1.0f;
         public float glyphHeight = 1.0f;
 
@@ -38,9 +38,15 @@ namespace ConsoleTextRenderer
             this.glyphs = new Glyph[lines,characters];
             this.maxCharacters  = characters;
             this.maxLines       = lines;
-            this.glyphWidth /= this.maxCharacters;
+            this.glyphWidth /= 2 * this.maxCharacters;
             this.glyphHeight = this.glyphWidth;
             this.ClearGlpyhs();
+        }
+
+        //Load GlyphMap
+        public void LoadGlyphMap(String path)
+        {
+
         }
 
         //Return maximum lines
