@@ -42,7 +42,7 @@ namespace ConsoleTextRenderer
             this.window.Resize      += this.Resize;
             this.window.KeyUp       += this.KeyboardKeyUp;
 
-            this.glyphManager = new GlyphManager(5, 32);
+            this.glyphManager = new GlyphManager(6,4);
             this.renderQueue = new RenderQueue();
             this.renderQueue.AddEntity(this.glyphManager);
 
@@ -74,11 +74,14 @@ namespace ConsoleTextRenderer
             GL.Enable(EnableCap.Texture2D);
             //Enable texture blending
             GL.Enable(EnableCap.Blend);
+          
             //Use this blending function
             //It does not modify the output value in any way
             GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
             //Load our bitmap
             Bitmap glyphMap = new Bitmap("alphabet_production_24bpp.bmp");
+            //Bitmap glyphMap = new Bitmap("DebugTexture.bmp");
+            //Bitmap glyphMap = new Bitmap("DebugTexture.bmp");
             BitmapData bmp_data = glyphMap.LockBits(new Rectangle(0, 0, glyphMap.Width, glyphMap.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
            
             //OpenGL texture
@@ -86,8 +89,11 @@ namespace ConsoleTextRenderer
             //Bind
             GL.BindTexture(TextureTarget.Texture2D, id);
             //Set texture parameters
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)TextureWrapMode.Clamp);
+            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)TextureWrapMode.Clamp);
+
             //Generate texture
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgb8, bmp_data.Width, bmp_data.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgr, PixelType.UnsignedByte, bmp_data.Scan0);
             //Unlock our bitmap
@@ -127,6 +133,18 @@ namespace ConsoleTextRenderer
         {
             switch(param.Key)
             {
+                case Key.Escape:
+                    {
+                        this.window.Close();
+                        break;
+                    }
+
+                case Key.AltLeft:
+                    {
+                        this.glyphManager.ClearGlpyhs();
+                        break;
+                    }
+
                 case Key.A:
                     {
                         this.glyphManager.WriteGlyph(Glyph.GLYPH_A);

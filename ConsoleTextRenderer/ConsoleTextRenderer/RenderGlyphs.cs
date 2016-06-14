@@ -42,9 +42,25 @@ namespace ConsoleTextRenderer
                         GL.MatrixMode(MatrixMode.Modelview);
                         GL.PushMatrix();
                         GL.LoadIdentity();
-                       
-                        float offsetX = 2 * position * glyphs.glyphWidth - glyphs.glyphWidth;
-                        float offsetY = 2 * line * glyphs.glyphHeight + glyphs.glyphHeight;
+
+                        //Offsets; for translation
+                        float offsetX = (position * (2*glyphs.glyphWidth)) + glyphs.glyphWidth;
+                        float offsetY = (line * (2*glyphs.glyphHeight)) + glyphs.glyphHeight;
+
+                        //UV pairs
+                        float u0, v0, u1, v1, u2, v2, u3, v3;
+
+                        u0 = currentGlyph.U0;
+                        v0 = currentGlyph.V0;
+
+                        u1 = currentGlyph.U0 + GlyphManager.glyphUVWidth;
+                        v1 = currentGlyph.V0;
+
+                        u2 = currentGlyph.U0 + GlyphManager.glyphUVWidth;
+                        v2 = currentGlyph.V0 + GlyphManager.glyphUVHeight;
+
+                        u3 = currentGlyph.U0;
+                        v3 = currentGlyph.V0 + GlyphManager.glyphUVHeight;
 
                         GL.Translate(offsetX, offsetY,0.0f);
                         GL.Scale(glyphs.glyphWidth, glyphs.glyphHeight, 1.0f);
@@ -53,19 +69,29 @@ namespace ConsoleTextRenderer
                         GL.Begin(PrimitiveType.Quads);
 
                         GL.Vertex3(-1.0f, -1.0f, 0.0f);
-                        GL.TexCoord2(currentGlyph.U0, currentGlyph.V0);
+                        GL.TexCoord2(u0, v0);
+                        //GL.TexCoord2(0.0f, 0.0f);
 
                         GL.Vertex3(1.0f, -1.0f, 0.0f);
-                        GL.TexCoord2(currentGlyph.U0 + GlyphManager.glyphUVWidth, currentGlyph.V0);
+                        GL.TexCoord2(u1, v1);
+                        //GL.TexCoord2(1.0f, 0.0f);
 
                         GL.Vertex3(1.0f, 1.0f, 0.0f);
-                        GL.TexCoord2(currentGlyph.U0 + GlyphManager.glyphUVWidth, currentGlyph.V0 + GlyphManager.glyphUVHeight);
+                        GL.TexCoord2(u2, v2);
+                        //GL.TexCoord2(1.0f, 1.0f);
 
                         GL.Vertex3(-1.0f, 1.0f, 0.0f);
-                        GL.TexCoord2(currentGlyph.U0, currentGlyph.V0 + GlyphManager.glyphUVHeight);
+                        GL.TexCoord2(u3, v3);
+                        //GL.TexCoord2(0.0f, 1.0f);
 
                         GL.End();
                         GL.PopMatrix();
+
+                        ErrorCode e = GL.GetError();
+                        if(e != 0)
+                        {
+                            throw new System.Exception(e.ToString());
+                        }
                     }
                 }
             }

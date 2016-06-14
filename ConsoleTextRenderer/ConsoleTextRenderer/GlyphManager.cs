@@ -87,22 +87,20 @@ namespace ConsoleTextRenderer
         //Write a glyph to the list
         public void WriteGlyph(Glyph glyph)
         {
-            if (glyphPos >= this.maxCharacters)
+            if(this.glyphPos >= this.maxCharacters)
             {
                 glyphLine++;
-                glyphPos = 0;
+                this.glyphPos = 0;
+
+                if(this.glyphLine >= this.maxLines)
+                {
+                    this.ClearGlpyhs();
+                    this.glyphPos = 0;
+                    this.glyphLine = 0;
+                }
             }
-            else
-            {
-                this.glyphs[glyphLine, glyphPos] = glyph;
-            }
-            if (glyphLine >= this.maxLines)
-            {
-                //What do we do with an overflow? I don't know!
-                //Clear it!
-                //For now...
-                this.ClearGlpyhs();
-            }
+
+            this.glyphs[glyphLine,glyphPos] = glyph;
             glyphPos++;
         }
 
