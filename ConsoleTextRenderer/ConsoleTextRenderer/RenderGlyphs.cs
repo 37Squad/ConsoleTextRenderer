@@ -87,6 +87,7 @@ namespace ConsoleTextRenderer
                         GL.End();
                         GL.PopMatrix();
 
+                        //Branch Test
                         ErrorCode e = GL.GetError();
                         if(e != 0)
                         {
