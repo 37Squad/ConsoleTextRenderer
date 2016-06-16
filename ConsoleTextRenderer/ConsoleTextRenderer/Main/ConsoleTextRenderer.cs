@@ -71,15 +71,23 @@ namespace ConsoleTextRenderer
             //Bind our VBO
             this.renderEngine.GetVBO().Bind();
 
+            /*
             //Submit a nice Triangle to draw
             //DEBUG ONLY
-            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(-1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f));
-            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f));
-            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f));
+            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f));
+            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f));
+            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f));
 
             //Map our client data to the server
             //DEBUG ONLY
             this.renderEngine.GetVBO().Map(this.renderEngine.client_vbo_data, 0, sizeof(float) * 9 * this.renderEngine.client_vbo_data.Count);
+
+
+            //Upload uniforms
+            this.renderEngine.GetFontShader().UploadUniformMatrix(0, this.renderEngine.modelStack.stack.Peek());
+            this.renderEngine.GetFontShader().UploadUniformMatrix(1, this.renderEngine.viewStack.stack.Peek());
+            this.renderEngine.GetFontShader().UploadUniformMatrix(2, this.renderEngine.projectionStack.stack.Peek());
+            */
         }
 
         //Called every frame; update logic here
@@ -98,7 +106,6 @@ namespace ConsoleTextRenderer
             //Draw
             //DEBUG ONLY
             Graphics.VertexBuffer.DrawAll(0, this.renderEngine.client_vbo_data.Count);
-            Misc.Misc.AssertGLError();
             //Render all of our objects
             //this.renderQueue.RenderAll();
             //Wait for all OpenGL operations to complete

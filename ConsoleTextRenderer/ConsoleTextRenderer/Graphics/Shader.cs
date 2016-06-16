@@ -99,6 +99,16 @@ namespace ConsoleTextRenderer.Graphics
             }
         }
 
+        //Upload a matrix
+        public void UploadUniformMatrix(int slot,OpenTK.Matrix4 mat)
+        {
+            if (!this.bound) return;
+            else
+            {
+                GL.UniformMatrix4(slot, false, ref mat);
+            }
+        }
+        
         //Detaches ALL shaders! 
         //OpenGL is a state machine
         //The purpose of this function is to really set the 'bound' flag

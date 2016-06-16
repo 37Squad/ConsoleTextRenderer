@@ -13,6 +13,10 @@ namespace ConsoleTextRenderer.Render
         private Graphics.VertexBufferLayout[] vertex_layout;
         private Graphics.Shader fontShader = null;
 
+        public Graphics.MatrixStack modelStack      = null;
+        public Graphics.MatrixStack projectionStack = null;
+        public Graphics.MatrixStack viewStack       = null;
+
         public List<Graphics.VertexBufferData> client_vbo_data;
 
         public RenderEngine(int vbo_byte_width)
@@ -32,8 +36,8 @@ namespace ConsoleTextRenderer.Render
 
             //This isn't regular software anymore
             //Bytes baby
-            //-----VERTEX----------/--UV--/--COLOR---/
-            // 4        8      12   16 20 24 28 32 36
+            //-----VERTEX----------/--UV--/--COLOR---/  //---VERTEX-------/
+            // 4        8      12   16 20 24 28 32 36   40      44      48
             // vertex,vertex,vertex,uv,uv,r ,g ,b ,a // repeat
             //previous floats * sizeof(floats) = offset
             //This vertex data layout is interleaved
@@ -45,12 +49,13 @@ namespace ConsoleTextRenderer.Render
             //for colors(including the spooky alpha channel)
             //Please understand that we have the ability to NOT waste memory on floating point decimals, but
             //I don't think we will encounter major performance tweaking with this lovely program.
+            //36 is the size of our VertexBufferData 
 
             this.vertex_layout = new Graphics.VertexBufferLayout[]
             {
-                new Graphics.VertexBufferLayout(0,3,sizeof(float)*6,0,OpenTK.Graphics.OpenGL.VertexAttribPointerType.Float),
-                //new Graphics.VertexBufferLayout(1,2,sizeof(float)*7,sizeof(float)*3,OpenTK.Graphics.OpenGL.VertexAttribPointerType.Float),
-                //new Graphics.VertexBufferLayout(2,4,sizeof(float)*5,sizeof(float)*5,OpenTK.Graphics.OpenGL.VertexAttribPointerType.Float)
+                new Graphics.VertexBufferLayout(0,3,36,0,OpenTK.Graphics.OpenGL.VertexAttribPointerType.Float),
+                new Graphics.VertexBufferLayout(1,2,36,sizeof(float)*3,OpenTK.Graphics.OpenGL.VertexAttribPointerType.Float),
+                new Graphics.VertexBufferLayout(2,4,36,sizeof(float)*5,OpenTK.Graphics.OpenGL.VertexAttribPointerType.Float)
             };
 
             this.vbo.Bind();
@@ -63,6 +68,11 @@ namespace ConsoleTextRenderer.Render
 
             //Create a list which we can use to upload our client data to the server
             this.client_vbo_data = new List<Graphics.VertexBufferData>();
+
+            //Load our matrices
+            this.modelStack         = new Graphics.MatrixStack(OpenTK.Matrix4.Identity);
+            this.projectionStack    = new Graphics.MatrixStack(OpenTK.Matrix4.CreateOrthographicOffCenter(0.0f,1.0f,1.0f,0.0f,0.0f,1.0f));
+            this.viewStack          = new Graphics.MatrixStack(OpenTK.Matrix4.Identity);
 
             //Debugging incoming
             Misc.Misc.AssertGLError();
