@@ -27,11 +27,22 @@ namespace ConsoleTextRenderer.Render
                 null
                 );
 
+            //This isn't regular software anymore
+            //Bytes baby
             //-----VERTEX----------/--UV--/--COLOR---/
             // 4        8      12   16 20 24 28 32 36
             // vertex,vertex,vertex,uv,uv,r ,g ,b ,a // repeat
             //previous floats * sizeof(floats) = offset
             //This vertex data layout is interleaved
+            //Format is: 3 floats for x y z coordinates, 2 floats for UV coordinates for texturing, and 4 (FOUR) floats
+            //9 floats in total, for an entire 'set' of data (ONE VERTICE), implies 9*4 byte width per datum, which is
+            //*duh* 36 bytes
+            //36 + 1???
+            //37
+            //for colors(including the spooky alpha channel)
+            //Please understand that we have the ability to NOT waste memory on floating point decimals, but
+            //I don't think we will encounter major performance tweaking with this lovely program.
+            
 
             this.vertex_layout = new Graphics.VertexBufferLayout[]
             {
@@ -47,11 +58,14 @@ namespace ConsoleTextRenderer.Render
             Misc.Misc.AssertGLError();
         }
 
+        //Cleanup time, cleanup time, everybody clean up
+        //Don't tell me what to do ^
         public void Cleanup()
         {
             this.vbo.Release();
         }
 
+        //Get our Vertex Buffer Object (but really its just a BufferObject)
         public Graphics.BufferObject<Graphics.VertexBufferData> GetVBO() { return this.vbo; }
     }
 }
