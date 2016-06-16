@@ -13,22 +13,22 @@ namespace ConsoleTextRenderer.Graphics
             this.x = _x;
             this.y = _y;
             this.z = _z;
-            this.u = _u;
-            this.v = _v;
-            this.r = _r;
-            this.g = _g;
-            this.b = _b;
-            this.a = _a;
+            //this.u = _u;
+            //this.v = _v;
+            //this.r = _r;
+            //this.g = _g;
+            //this.b = _b;
+            //this.a = _a;
         }
 
         float x;
         float y;
         float z;
-        float u;
-        float v;
-        float r;
-        float g;
-        float b;
-        float a;
+        //float u;
+        //float v;
+        //float r;
+        //float g;
+        //float b;
+        //float a;
     }
 }

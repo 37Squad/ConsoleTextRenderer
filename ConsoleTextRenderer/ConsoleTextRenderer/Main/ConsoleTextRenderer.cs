@@ -46,6 +46,7 @@ namespace ConsoleTextRenderer
             this.window.RenderFrame += this.Draw;
             this.window.Resize      += this.Resize;
             this.window.KeyUp       += this.KeyboardKeyUp;
+            this.window.Closed      += this.Close;
 
             //Create our Glyph Manager
             this.glyphManager = new GlyphManager(6,4);
@@ -65,7 +66,20 @@ namespace ConsoleTextRenderer
         private void Load(object sender, object param)
         {
             //Load basic OpenGL state
-           
+            //Bind the font shader
+            this.renderEngine.GetFontShader().Bind();
+            //Bind our VBO
+            this.renderEngine.GetVBO().Bind();
+
+            //Submit a nice Triangle to draw
+            //DEBUG ONLY
+            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(-1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f));
+            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f));
+            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f));
+
+            //Map our client data to the server
+            //DEBUG ONLY
+            this.renderEngine.GetVBO().Map(this.renderEngine.client_vbo_data, 0, sizeof(float) * 9 * this.renderEngine.client_vbo_data.Count);
         }
 
         //Called every frame; update logic here
@@ -81,6 +95,10 @@ namespace ConsoleTextRenderer
             GL.Clear(ClearBufferMask.ColorBufferBit);
             GL.ClearColor(Color.Black);
 
+            //Draw
+            //DEBUG ONLY
+            Graphics.VertexBuffer.DrawAll(0, this.renderEngine.client_vbo_data.Count);
+            Misc.Misc.AssertGLError();
             //Render all of our objects
             //this.renderQueue.RenderAll();
             //Wait for all OpenGL operations to complete
@@ -270,6 +288,11 @@ namespace ConsoleTextRenderer
 
                 default: break;
             }
+        }
+
+        private void Close(object sender,object args)
+        {
+            this.renderEngine.Cleanup();
         }
     }
 }

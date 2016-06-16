@@ -24,11 +24,14 @@ namespace ConsoleTextRenderer.Graphics
 
         public Shader(String _filePath)
         {
-            this.shaderDirectory    = _filePath;
-            this.loaded             = false;
-            this.vertexShader       = 0;
-            this.fragmentShader     = 0;
-            this.program            = 0;
+            this.shaderDirectory        = _filePath;
+            this.vertexShaderSource     = "";
+            this.fragmentShaderSource   = "";
+            this.loaded                 = false;
+            this.bound                  = false;
+            this.vertexShader           = 0;
+            this.fragmentShader         = 0;
+            this.program                = 0;
             this.LoadShader(_filePath);
         }
 
@@ -37,35 +40,13 @@ namespace ConsoleTextRenderer.Graphics
         //their own files. Therfore, it will be done that way.
         private void LoadShader(String _filePath)
         {
-            try
+            if(!(File.Exists(_filePath + "\\vertex_shader.glsl") && File.Exists(_filePath + "\\fragment_shader.glsl")) )
             {
-                //Read files
-                using (FileStream file = new FileStream(_filePath + "//vertex.glsl", FileMode.Open))
-                {
-                    //Read the raw bytes
-                    byte[] fileData = new byte[256];
-                    file.Read(fileData, 0, 256);
-
-                    //Turn the bytes into a String
-                    //characters are just bytes, right guys?
-                    //so is everything...
-                    // :I
-                    this.vertexShaderSource = Convert.ToString(fileData);
-                }
-
-                using (FileStream file = new FileStream(_filePath + "//fragment.glsl", FileMode.Open))
-                {
-                    byte[] fileData = new byte[256];
-                    file.Read(fileData, 0, 256);
-
-                    this.fragmentShaderSource = Convert.ToString(fileData);
-                }
+                throw new Exception("Shaders do not exist.");
             }
-            //If we can't read these files, throw an icky exception
-            catch(IOException)
-            {
-                throw new Exception("Could not open GLSL shaders.");
-            }
+
+            this.vertexShaderSource = File.ReadAllText(_filePath + "\\vertex_shader.glsl");
+            this.fragmentShaderSource = File.ReadAllText(_filePath + "\\fragment_shader.glsl");
 
             //Grab pointers for our shaders
             this.vertexShader   = GL.CreateShader(ShaderType.VertexShader);
@@ -80,6 +61,9 @@ namespace ConsoleTextRenderer.Graphics
             GL.CompileShader(this.vertexShader);
             GL.CompileShader(this.fragmentShader);
 
+            Console.WriteLine(GL.GetShaderInfoLog(this.vertexShader));
+            Console.WriteLine(GL.GetShaderInfoLog(this.fragmentShader));
+
             //Grab a program pointer
             this.program = GL.CreateProgram();
 
@@ -89,6 +73,10 @@ namespace ConsoleTextRenderer.Graphics
 
             //Bind them, as it were, to our program
             GL.LinkProgram(this.program);
+
+            //Now detach our shaders
+            GL.DetachShader(this.program, this.vertexShader);
+            GL.DetachShader(this.program, this.fragmentShader);
 
             //Return the compilation log. Used for debugging.
             String log = GL.GetProgramInfoLog(this.program);
@@ -122,6 +110,17 @@ namespace ConsoleTextRenderer.Graphics
                 GL.UseProgram(0);
                 this.bound = false;
             }
+        }
+
+        //Release memory
+        public void Release()
+        {
+            //First, unbind our shader
+            this.Unbind();
+            //Now, delete
+            GL.DeleteProgram(this.program);
+            GL.DeleteShader(this.vertexShader);
+            GL.DeleteShader(this.fragmentShader);
         }
 
         //Self-expalantory

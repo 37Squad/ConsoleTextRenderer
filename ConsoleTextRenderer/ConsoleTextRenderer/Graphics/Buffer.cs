@@ -46,18 +46,35 @@ namespace ConsoleTextRenderer.Graphics
         private bool bound                  = false;
         //Descriptor, tells us what type of buffer we are making
         private BufferDescriptor descriptor;
+        //How many elements exist in the buffer?
+        private int elements                = 0;
 
         //Create a BufferObject
-        public BufferObject(BufferDescriptor _descriptor,T[] data)
+        public BufferObject(BufferDescriptor _descriptor,List<T> data)
         {
             //Grab a pointer to a buffer
             this.buffer_object  = GL.GenBuffer();
             this.descriptor     = _descriptor;
             this.bound          = false;
+            if(data == null)
+            {
+                this.elements = 0;
+            }
+            else
+            {
+                this.elements = data.Count;
+            }
 
             //Call BufferData initially to initialize our Vertex Buffer's actual server-side data
             this.Bind();
-            GL.BufferData<T>(this.descriptor.GetTarget(), (IntPtr)this.descriptor.GetByteWidth(), data,this.descriptor.GetUsage());
+            if (data == null)
+            {
+                GL.BufferData(this.descriptor.GetTarget(), (IntPtr)this.descriptor.GetByteWidth(), IntPtr.Zero, this.descriptor.GetUsage());
+            }
+            else
+            {
+                GL.BufferData<T>(this.descriptor.GetTarget(), (IntPtr)this.descriptor.GetByteWidth(), data.ToArray(), this.descriptor.GetUsage());
+            }
             this.Unbind();
 
             Misc.Misc.AssertGLError();
@@ -76,17 +93,30 @@ namespace ConsoleTextRenderer.Graphics
         }
 
         //Call this to upload our data to OpenGL
-        public bool Map(T[] data,int startIdx,int byte_count)
+        public bool Map(List<T> data,int startIdx,int byte_count)
         {
             if (!this.bound) return false;
             else
             {
                 //Update either A) the entire buffer, or B) a portion of the buffer
-                GL.BufferSubData<T>(this.descriptor.GetTarget(),(IntPtr)startIdx,(IntPtr)byte_count,data);
+                GL.BufferSubData<T>(this.descriptor.GetTarget(),(IntPtr)startIdx,(IntPtr)byte_count,data.ToArray());
                 Misc.Misc.AssertGLError();
 
                 return true;
             }
+        }
+
+        //Clear server-side data
+        public bool Clear()
+        {
+            if (!this.bound) return false;
+            else
+            {
+                GL.BufferData(this.descriptor.GetTarget(), (IntPtr)this.descriptor.GetByteWidth(), IntPtr.Zero, this.descriptor.GetUsage());
+            }
+
+            this.elements = 0;
+            return true;
         }
 
         //Bind this buffer object
