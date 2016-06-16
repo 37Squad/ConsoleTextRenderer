@@ -71,6 +71,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphics\BufferData.cs" />
+    <Compile Include="Graphics\BufferDefines.cs" />
+    <Compile Include="Graphics\Shader.cs" />
+    <Compile Include="Graphics\VertexBuffer.cs" />
+    <Compile Include="Misc\Misc.cs" />
+    <Compile Include="Render\RenderEngine.cs" />
     <Compile Include="Systems\Entity.cs" />
     <Compile Include="Systems\Glyph.cs" />
     <Compile Include="Systems\GlyphManager.cs" />
@@ -79,8 +85,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Render\Renderable.cs" />
     <Compile Include="Render\RenderGlyphs.cs" />
-    <Compile Include="Systems\RenderManager.cs" />
+    <Compile Include="Render\RenderManager.cs" />
     <Compile Include="Render\RenderQueue.cs" />
+    <Compile Include="Graphics\Buffer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -97,9 +104,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Graphics\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -24,10 +24,11 @@ namespace ConsoleTextRenderer
         //OpenTK handle object
         private GameWindow window = null;
         //GlyphManager
-        private GlyphManager glyphManager;
+        private GlyphManager glyphManager = null;
         //RenderQueue
-        private RenderQueue renderQueue;
-
+        private RenderQueue renderQueue = null;
+        //Render Engine
+        private RenderEngine renderEngine = null;
        
         public ConsoleTextRenderer(int x,int y, int width, int height,int refreshRate)
         {
@@ -46,9 +47,15 @@ namespace ConsoleTextRenderer
             this.window.Resize      += this.Resize;
             this.window.KeyUp       += this.KeyboardKeyUp;
 
+            //Create our Glyph Manager
             this.glyphManager = new GlyphManager(6,4);
+            //Render Queue - Assemble!
             this.renderQueue = new RenderQueue();
+            //Now add our lovely Glyph Manager to the Render Queue - so that it shall be rendered
             this.renderQueue.AddEntity(this.glyphManager);
+            //Our Render Engine from which all rendering capabilities are derived from
+            this.renderEngine = new RenderEngine(4096);
+
 
             //Start it up!
             this.window.Run(refreshRate);
@@ -78,6 +85,7 @@ namespace ConsoleTextRenderer
             //this.renderQueue.RenderAll();
             //Wait for all OpenGL operations to complete
             GL.Finish();
+            
             //Now swap buffers
             this.window.SwapBuffers();
         }
