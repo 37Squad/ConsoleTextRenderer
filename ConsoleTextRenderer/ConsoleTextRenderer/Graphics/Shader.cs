@@ -109,6 +109,15 @@ namespace ConsoleTextRenderer.Graphics
             }
         }
 
+        public int GetUniformLocation(String name)
+        {
+            if (!this.bound) return -1;
+            else
+            {
+                return GL.GetUniformLocation(this.program, name);
+            }
+        }
+
         //Send to GLSL
         public void UploadTexture(String uniformName,int tex)
         {

@@ -4,7 +4,7 @@ in vec2 out_uv;
 in vec4 out_color;
 
 uniform sampler2D textureAtlas;
-uniform bool render;
+uniform bool render = true;
 
 //Black
 const vec4 ignoreColor = vec4(0.0);

@@ -29,6 +29,13 @@ namespace ConsoleTextRenderer.Systems
             this.glyphManagerRef = _glyphManagerRef;
         }
 
+        public GlyphManager GetGlyphManagerRef() { return this.glyphManagerRef; }
+
+        public bool ShouldRender()
+        {
+            return this.render;
+        }
+
         public void Update()
         {
             long currentTick = DateTime.Now.Ticks;

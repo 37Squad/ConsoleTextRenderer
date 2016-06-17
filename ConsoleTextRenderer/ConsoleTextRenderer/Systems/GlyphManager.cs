@@ -55,6 +55,11 @@ namespace ConsoleTextRenderer.Systems
 
         }
 
+        //Get current line
+        public int GetLine() { return this.glyphLine; }
+        //Get current pos
+        public int GetPosition() { return this.glyphPos; }
+
         //Return maximum lines
         public int GetMaxLines()
         {

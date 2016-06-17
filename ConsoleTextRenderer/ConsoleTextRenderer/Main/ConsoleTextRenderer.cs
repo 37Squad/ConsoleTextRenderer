@@ -106,6 +106,8 @@ namespace ConsoleTextRenderer
             GL.Clear(ClearBufferMask.DepthBufferBit);
             GL.ClearColor(Color.Black);
 
+            //Render our things...
+            this.renderQueue.RenderQueued();
             //DEBUG ONLY
             //Draw ALL contents
             //Graphics.VertexBuffer.DrawAll(0, this.renderEngine.client_vbo_data.Count);

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using OpenTK.Graphics.OpenGL;
+
 namespace ConsoleTextRenderer.Render
 {
     class RenderMarker
@@ -18,22 +20,51 @@ namespace ConsoleTextRenderer.Render
         {
             //Bind
             engine.GetMarkerShader().Bind();
+            engine.GetVBO().Bind();
 
             //Create a Quad
-            engine.client_vbo_data.Add(new Graphics.VertexBufferData());
-            engine.client_vbo_data.Add(new Graphics.VertexBufferData());
-            engine.client_vbo_data.Add(new Graphics.VertexBufferData());
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 0.0f, 0.0f, 0.3125f, 0.0625f, 1.0f, 1.0f, 1.0f, 1.0f));
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, 0.0f, 0.34375f, 0.0625f, 1.0f, 1.0f, 1.0f, 1.0f));
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, 0.0f, 0.3125f, 0.09375f, 1.0f, 1.0f, 1.0f, 1.0f));
 
-            engine.client_vbo_data.Add(new Graphics.VertexBufferData());
-            engine.client_vbo_data.Add(new Graphics.VertexBufferData());
-            engine.client_vbo_data.Add(new Graphics.VertexBufferData());
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, 0.0f, 0.3125f, 0.09375f, 1.0f, 1.0f, 1.0f, 1.0f));
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 1.0f, 0.0f, 0.34375f, 0.09375f, 1.0f, 1.0f, 1.0f, 1.0f));
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, 0.0f, 0.34375f, 0.0625f, 1.0f, 1.0f, 1.0f, 1.0f));
 
+            //Translate our Marker based on where the next glyph will be placed
+            float offsetX = 0.0f;
+            float offsetY = 0.0f;
+
+            offsetX = (float)(marker.GetGlyphManagerRef().GetPosition()) * marker.GetGlyphManagerRef().glyphWidth;
+            offsetY = (float)(marker.GetGlyphManagerRef().GetLine()) * marker.GetGlyphManagerRef().glyphHeight;
+
+            //Translate based on current glyph position
+            //Scale based on glyph width and height, even though this isn't really a glyph
+            engine.modelStack.stack.Push(OpenTK.Matrix4.CreateScale(marker.GetGlyphManagerRef().glyphWidth,marker.GetGlyphManagerRef().glyphHeight,1.0f));
+            engine.modelStack.Multiply(OpenTK.Matrix4.CreateTranslation(offsetX,offsetY,0.0f));
             //Upload Uniforms
             engine.GetMarkerShader().UploadUniformMatrix(0, engine.modelStack.stack.Peek());
-            engine.GetMarkerShader().UploadUniformMatrix(0, engine.modelStack.stack.Peek());
-            engine.GetMarkerShader().UploadUniformMatrix(0, engine.modelStack.stack.Peek());
+            engine.GetMarkerShader().UploadUniformMatrix(1, engine.viewStack.stack.Peek());
+            engine.GetMarkerShader().UploadUniformMatrix(2, engine.projectionStack.stack.Peek());
+
+            GL.Uniform1(engine.GetMarkerShader().GetUniformLocation("render"), Convert.ToInt32(marker.ShouldRender()));
+            //Upload our texture atlas
+            engine.textureAtlas.MakeActive(OpenTK.Graphics.OpenGL.TextureUnit.Texture0);
+            engine.textureAtlas.Bind();
+            engine.GetMarkerShader().UploadTexture("textureAtlas", 0);
+            //Pop!
+            engine.modelStack.stack.Pop();
+            //Map
+            engine.GetVBO().Map(engine.client_vbo_data, 0, sizeof(float) * 9 * engine.client_vbo_data.Count);
+            //Draw
+            Graphics.VertexBuffer.DrawAll(0, engine.client_vbo_data.Count);
+            //Reset Client data
+            engine.client_vbo_data.Clear();
+            //Reset Server data
+            engine.GetVBO().Clear();
 
             //Unbind
+            engine.GetVBO().Unbind();
             engine.GetMarkerShader().Unbind();
         }
         //Cursor / Marker Renderer

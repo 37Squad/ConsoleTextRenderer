@@ -93,7 +93,7 @@ namespace ConsoleTextRenderer.Graphics
             else
             {
                 EnableAttribArrays();
-                GL.DrawArrays(PrimitiveType.TriangleStrip, startIdx, count);
+                GL.DrawArrays(PrimitiveType.Triangles, startIdx, count);
                 DisableAttribArrays();
             }
         }
