@@ -80,7 +80,7 @@ namespace ConsoleTextRenderer.Render
 
             //Load our matrices
             this.modelStack         = new Graphics.MatrixStack(OpenTK.Matrix4.Identity);
-            this.projectionStack    = new Graphics.MatrixStack(OpenTK.Matrix4.CreateOrthographicOffCenter(0.0f,1.0f,1.0f,0.0f,0.0f,1.0f));
+            this.projectionStack    = new Graphics.MatrixStack(OpenTK.Matrix4.CreateOrthographicOffCenter(0.0f,1.0f,1.0f,0.0f,0.0f,10.0f));
             this.viewStack          = new Graphics.MatrixStack(OpenTK.Matrix4.Identity);
 
             //Load basic OpenGL state
@@ -93,6 +93,8 @@ namespace ConsoleTextRenderer.Render
             this.textureAtlas.MakeActive(OpenTK.Graphics.OpenGL.TextureUnit.Texture0);
             this.textureAtlas.Bind();
             this.fontShader.UploadTexture("textureAtlas", 0);
+
+            GL.Enable(EnableCap.DepthTest);
 
             //Debugging incoming
             Misc.Misc.AssertGLError();
@@ -111,5 +113,7 @@ namespace ConsoleTextRenderer.Render
         public Graphics.BufferObject<Graphics.VertexBufferData> GetVBO() { return this.vbo; }
         //Get our font shader
         public Graphics.Shader GetFontShader() { return this.fontShader; }
+        //Get Marker shader
+        public Graphics.Shader GetMarkerShader() { return this.markerShader; }
     }
 }

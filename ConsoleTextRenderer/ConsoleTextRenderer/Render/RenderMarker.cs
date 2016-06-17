@@ -6,21 +6,36 @@ using System.Threading.Tasks;
 
 namespace ConsoleTextRenderer.Render
 {
-    class RenderMarker : IRenderable
+    class RenderMarker
     {
-        public RenderMarker()
+        //Cursor / Marker Renderer
+        public static void Render_Marker_Object(ref Render.RenderEngine engine, object renderable)
         {
-
+            Render_Marker(ref engine, (Systems.Marker)renderable);
         }
 
-        public void Render(object obj)
+        private static void Render_Marker(ref Render.RenderEngine engine, Systems.Marker marker)
         {
+            //Bind
+            engine.GetMarkerShader().Bind();
 
+            //Create a Quad
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData());
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData());
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData());
+
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData());
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData());
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData());
+
+            //Upload Uniforms
+            engine.GetMarkerShader().UploadUniformMatrix(0, engine.modelStack.stack.Peek());
+            engine.GetMarkerShader().UploadUniformMatrix(0, engine.modelStack.stack.Peek());
+            engine.GetMarkerShader().UploadUniformMatrix(0, engine.modelStack.stack.Peek());
+
+            //Unbind
+            engine.GetMarkerShader().Unbind();
         }
-
-        private void Render_Marker(Systems.Marker marker)
-        {
-
-        }
+        //Cursor / Marker Renderer
     }
 }

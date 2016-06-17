@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleTextRenderer.Systems
 {
-    class GlyphManager : Entity
+    class GlyphManager
     {
         //'glyphPos' and 'glyphLine' are indexes for the 'glyphs' array
         //holds current glpyh position in the current line
@@ -93,12 +93,12 @@ namespace ConsoleTextRenderer.Systems
         //Write a glyph to the list
         public void WriteGlyph(Glyph glyph)
         {
-            if(this.glyphPos >= this.maxCharacters)
+            if (this.glyphPos >= this.maxCharacters)
             {
                 glyphLine++;
                 this.glyphPos = 0;
 
-                if(this.glyphLine >= this.maxLines)
+                if (this.glyphLine >= this.maxLines)
                 {
                     this.ClearGlpyhs();
                     this.glyphPos = 0;
@@ -106,13 +106,8 @@ namespace ConsoleTextRenderer.Systems
                 }
             }
 
-            this.glyphs[glyphLine,glyphPos] = glyph;
+            this.glyphs[glyphLine, glyphPos] = glyph;
             glyphPos++;
-        }
-
-        public RenderManager getRenderManager()
-        {
-            return RenderManager.glyph_renderManager;
         }
     }
 }

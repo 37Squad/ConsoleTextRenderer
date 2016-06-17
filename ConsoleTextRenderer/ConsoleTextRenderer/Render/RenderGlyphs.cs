@@ -11,22 +11,18 @@ using OpenTK.Input;
 
 namespace ConsoleTextRenderer.Render
 {
-    class RenderGlyphs : IRenderable
+    class RenderGlyphs
     {
-        public RenderGlyphs()
+        //Font Renderer
+        public static void Render_Font_Object(ref Render.RenderEngine engine, object renderable)
+        {
+            Render_Font(ref engine, (Systems.GlyphManager)renderable);
+        }
+
+        private static void Render_Font(ref Render.RenderEngine engine, Systems.GlyphManager glyphManager)
         {
 
         }
-
-        public void Render(object obj)
-        {
-            this.Render_Glyphs((Systems.GlyphManager)obj);
-        }
-
-        //Render all glyphs, from a glyph manager
-        private void Render_Glyphs(Systems.GlyphManager glyphs)
-        {
-
-        }
+        //Font Renderer
     }
 }

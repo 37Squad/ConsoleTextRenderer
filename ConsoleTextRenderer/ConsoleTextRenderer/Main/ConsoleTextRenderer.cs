@@ -52,17 +52,16 @@ namespace ConsoleTextRenderer
 
             //Create our Glyph Manager
             this.glyphManager = new GlyphManager(6,4);
-            //Render Queue - Assemble!
-            this.renderQueue = new RenderQueue();
             //Our Render Engine from which all rendering capabilities are derived from
             this.renderEngine = new RenderEngine(4096);
+            //Render Queue - Assemble!
+            this.renderQueue = new RenderQueue(ref this.renderEngine);
             //Our marker that exists where the next character ought to be
-            this.marker = new Marker(0.0f, 0.0f, 2,ref this.glyphManager);
-
+            this.marker = new Marker(0.0f, 0.0f, 2, ref this.glyphManager);
             //Now add our lovely Glyph Manager to the Render Queue - so that it shall be rendered
-            this.renderQueue.AddEntity(this.glyphManager);
-            //Add our Marker to the Render Queue!
-            this.renderQueue.AddEntity(this.marker);
+            this.renderQueue.AddPair(this.glyphManager, Render.RenderGlyphs.Render_Font_Object);
+            //And now add our Marker
+            this.renderQueue.AddPair(this.marker, Render.RenderMarker.Render_Marker_Object);
 
             //Start it up!
             this.window.Run(refreshRate);
@@ -73,13 +72,24 @@ namespace ConsoleTextRenderer
         { 
             //Submit a nice Triangle to draw
             //DEBUG ONLY
-            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f));
-            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f));
-            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f));
+            /*
+            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f));
+            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f));
+            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f));
 
-            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f));
-            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f));
-            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f));
+            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f));
+            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, -1.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f));
+            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, -1.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f));
+
+            //Map our client data to the server
+            //DEBUG ONLY
+            this.renderEngine.GetVBO().Map(this.renderEngine.client_vbo_data, 0, sizeof(float) * 9 * this.renderEngine.client_vbo_data.Count);
+
+            //Upload uniforms
+            this.renderEngine.GetFontShader().UploadUniformMatrix(0, this.renderEngine.modelStack.stack.Peek());
+            this.renderEngine.GetFontShader().UploadUniformMatrix(1, this.renderEngine.viewStack.stack.Peek());
+            this.renderEngine.GetFontShader().UploadUniformMatrix(2, this.renderEngine.projectionStack.stack.Peek());
+            */
         }
 
         //Called every frame; update logic here
@@ -93,20 +103,12 @@ namespace ConsoleTextRenderer
         {
             //Clear Screen
             GL.Clear(ClearBufferMask.ColorBufferBit);
+            GL.Clear(ClearBufferMask.DepthBufferBit);
             GL.ClearColor(Color.Black);
 
-            //Don't actually Render here, we just add data to our client_vbo_data
-            this.renderQueue.RenderAll();
-            //Map our client data to the server
-            this.renderEngine.GetVBO().Map(this.renderEngine.client_vbo_data, 0, sizeof(float) * 9 * this.renderEngine.client_vbo_data.Count);
-            //Draw
-            Graphics.VertexBuffer.DrawAll(0, this.renderEngine.client_vbo_data.Count);
-            //Render all of our objects
-            //this.renderQueue.RenderAll();
-            //Now clear our VBO aka server side memory
-            this.renderEngine.GetVBO().Clear();
-            //Clear our client-side memory
-            this.renderEngine.client_vbo_data.Clear();
+            //DEBUG ONLY
+            //Draw ALL contents
+            //Graphics.VertexBuffer.DrawAll(0, this.renderEngine.client_vbo_data.Count);
             //Wait for all OpenGL operations to complete
             GL.Finish();
             //Now swap buffers

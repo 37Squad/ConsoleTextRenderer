@@ -8,28 +8,37 @@ namespace ConsoleTextRenderer.Render
 {
     class RenderQueue
     {
-        //List of renderable entities
-        List<Systems.Entity> renderableEntities;
-        public RenderQueue()
+        private List<KeyValuePair<object, Renderable.RenderObject>> renderQueue = null;
+        private RenderEngine renderEngineReference = null;
+
+        public RenderQueue(ref RenderEngine renderEngine)
         {
-            this.renderableEntities = new List<Systems.Entity>();
+            //Render Queue
+            this.renderQueue = new List<KeyValuePair<object, Renderable.RenderObject>>();
+            //Grab a ref
+            this.renderEngineReference = renderEngine;
         }
 
-        public void AddEntity(Systems.Entity entity)
+        //Add a pair
+        public void AddPair(object renderableObject,Renderable.RenderObject function)
         {
-            this.renderableEntities.Add(entity);
+            this.renderQueue.Add(new KeyValuePair<object, Renderable.RenderObject>(renderableObject, function));
         }
 
-        public void ClearList()
+        //Clear this queue
+        public void ClearQueue()
         {
-            this.renderableEntities.Clear();
+            this.renderQueue.Clear();
         }
 
-        public void RenderAll()
+        //Render this lovely queue
+        public void RenderQueued()
         {
-            foreach(Systems.Entity entity in this.renderableEntities)
+            //Grab each pair
+            foreach(var pair in this.renderQueue)
             {
-                entity.getRenderManager().renderer.Render(entity);
+                //Invoke the render function supplied, with the Key as the parameter of the render function... lovely
+                pair.Value(ref this.renderEngineReference, pair.Key);
             }
         }
     }

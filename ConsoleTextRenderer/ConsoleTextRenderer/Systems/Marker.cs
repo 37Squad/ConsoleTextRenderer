@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleTextRenderer.Systems
 {
-    class Marker : Entity
+    class Marker
     {
         //Position
         public float x = 0.0f;
@@ -37,11 +37,6 @@ namespace ConsoleTextRenderer.Systems
                 this.render = !this.render;
                 this.prevTick = currentTick;
             }
-        }
-
-        public RenderManager getRenderManager()
-        {
-            return RenderManager.marker_renderManager;
         }
     }
 }

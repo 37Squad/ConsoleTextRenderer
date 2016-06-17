@@ -8,8 +8,9 @@ namespace ConsoleTextRenderer.Render
 {
     //Interface for rendering Entities
     //'obj' is the object you want to render
-    interface IRenderable
+    class Renderable
     {
-        void Render(object obj);
+        //Function Pointer Define
+        public delegate void RenderObject(ref Render.RenderEngine engine,object renderable);
     }
 }
