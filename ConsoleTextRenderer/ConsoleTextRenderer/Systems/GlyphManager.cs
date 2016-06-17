@@ -43,6 +43,12 @@ namespace ConsoleTextRenderer.Systems
             this.ClearGlpyhs();
         }
 
+        //Update logic?
+        public void Update()
+        {
+
+        }
+
         //Load GlyphMap
         public void LoadGlyphMap(String path)
         {

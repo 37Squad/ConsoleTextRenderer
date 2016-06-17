@@ -15,6 +15,7 @@ namespace ConsoleTextRenderer.Render
         private Graphics.BufferObject<Graphics.VertexBufferData> vbo = null;
         private Graphics.VertexBufferLayout[] vertex_layout;
         private Graphics.Shader fontShader = null;
+        private Graphics.Shader markerShader = null;
 
         public Graphics.MatrixStack modelStack      = null;
         public Graphics.MatrixStack projectionStack = null;
@@ -71,6 +72,9 @@ namespace ConsoleTextRenderer.Render
             //One day we will make this nice and clean
             this.fontShader = new Graphics.Shader("C:\\Users\\Nick\\Source\\Repos\\ConsoleTextRenderer\\ConsoleTextRenderer\\ConsoleTextRenderer\\Graphics\\Shaders\\Font");
 
+            //Marker Shader
+            this.markerShader = new Graphics.Shader("C:\\Users\\Nick\\Source\\Repos\\ConsoleTextRenderer\\ConsoleTextRenderer\\ConsoleTextRenderer\\Graphics\\Shaders\\Marker");
+
             //Create a list which we can use to upload our client data to the server
             this.client_vbo_data = new List<Graphics.VertexBufferData>();
 
@@ -87,11 +91,8 @@ namespace ConsoleTextRenderer.Render
 
             this.textureAtlas = new Graphics.Texture("C:\\Users\\Nick\\Source\\Repos\\ConsoleTextRenderer\\ConsoleTextRenderer\\ConsoleTextRenderer\\bin\\Debug\\alphabet_production_32bpp.bmp");
             this.textureAtlas.MakeActive(OpenTK.Graphics.OpenGL.TextureUnit.Texture0);
-            ErrorCode e0 = GL.GetError();
             this.textureAtlas.Bind();
-            ErrorCode e1 = GL.GetError();
             this.fontShader.UploadTexture("textureAtlas", 0);
-            ErrorCode e2 = GL.GetError();
 
             //Debugging incoming
             Misc.Misc.AssertGLError();

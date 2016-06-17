@@ -10,6 +10,7 @@ namespace ConsoleTextRenderer.Systems
     {
         //List of RenderManagers
         public static RenderManager glyph_renderManager = new RenderManager(new Render.RenderGlyphs());
+        public static RenderManager marker_renderManager = new RenderManager(new Render.RenderMarker());
 
         //This RenderManagers renderer
         public Render.IRenderable renderer;
