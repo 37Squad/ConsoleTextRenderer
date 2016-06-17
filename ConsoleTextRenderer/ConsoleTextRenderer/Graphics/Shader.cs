@@ -108,6 +108,12 @@ namespace ConsoleTextRenderer.Graphics
                 GL.UniformMatrix4(slot, false, ref mat);
             }
         }
+
+        //Send to GLSL
+        public void UploadTexture(String uniformName,int tex)
+        {
+            GL.Uniform1(GL.GetUniformLocation(this.program, uniformName),tex);
+        }
         
         //Detaches ALL shaders! 
         //OpenGL is a state machine

@@ -51,6 +51,17 @@ namespace ConsoleTextRenderer.Graphics
             this.bound = true;
         }
 
+        public void MakeActive(TextureUnit unit)
+        {
+            GL.ActiveTexture(unit);
+        }
+
+        public void Release()
+        {
+            this.Unbind();
+            GL.DeleteTexture(this.texture_pointer);
+        }
+
         //Unbind ALL textures
         public void Unbind()
         {

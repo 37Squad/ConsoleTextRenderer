@@ -12,18 +12,13 @@ void main()
 {
 	//Grab texture from UV coords
 	vec4 textured_frag = texture(textureAtlas,out_uv);
-	
-	//If our texture is BLACK, then let it through
-	if( equal(textured_frag,ignoreColor) )
-	{
-		gl_FragColor = textured_frag;
-	}
-	//OTHERWISE, if we have a set color, use it!
-	//We do this so that we can color our text!
-	else
-	{
-		gl_FragColor = out_color;
-	}
 
-	gl_FragColor = out_color;
+	//If we have a white pixel, then we are instead going to use the color passed in
+	//We can make our text different colors!
+	if( textured_frag == vec4(1.0,1.0,1.0,1.0) )
+	{
+		textured_frag = out_color;
+	}
+	
+	gl_FragColor = textured_frag;
 }

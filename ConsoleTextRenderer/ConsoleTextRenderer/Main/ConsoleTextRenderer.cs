@@ -64,19 +64,12 @@ namespace ConsoleTextRenderer
 
         //Called on window creation
         private void Load(object sender, object param)
-        {
-            //Load basic OpenGL state
-            //Bind the font shader
-            this.renderEngine.GetFontShader().Bind();
-            //Bind our VBO
-            this.renderEngine.GetVBO().Bind();
-
-            /*
+        { 
             //Submit a nice Triangle to draw
             //DEBUG ONLY
-            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f));
-            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f));
-            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f));
+            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f));
+            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f));
+            this.renderEngine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f));
 
             //Map our client data to the server
             //DEBUG ONLY
@@ -87,7 +80,6 @@ namespace ConsoleTextRenderer
             this.renderEngine.GetFontShader().UploadUniformMatrix(0, this.renderEngine.modelStack.stack.Peek());
             this.renderEngine.GetFontShader().UploadUniformMatrix(1, this.renderEngine.viewStack.stack.Peek());
             this.renderEngine.GetFontShader().UploadUniformMatrix(2, this.renderEngine.projectionStack.stack.Peek());
-            */
         }
 
         //Called every frame; update logic here
@@ -118,7 +110,7 @@ namespace ConsoleTextRenderer
         //Called on a window resize
         private void Resize(object sender, object param)
         {
-
+            GL.Viewport(new Rectangle(0, 0, this.window.Width, this.window.Height));
         }
 
         private void KeyboardKeyUp(object sender, KeyboardKeyEventArgs param)

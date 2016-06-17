@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
+
 namespace ConsoleTextRenderer.Render
 {
     class RenderEngine
@@ -16,6 +19,8 @@ namespace ConsoleTextRenderer.Render
         public Graphics.MatrixStack modelStack      = null;
         public Graphics.MatrixStack projectionStack = null;
         public Graphics.MatrixStack viewStack       = null;
+
+        public Graphics.Texture textureAtlas        = null;
 
         public List<Graphics.VertexBufferData> client_vbo_data;
 
@@ -74,6 +79,20 @@ namespace ConsoleTextRenderer.Render
             this.projectionStack    = new Graphics.MatrixStack(OpenTK.Matrix4.CreateOrthographicOffCenter(0.0f,1.0f,1.0f,0.0f,0.0f,1.0f));
             this.viewStack          = new Graphics.MatrixStack(OpenTK.Matrix4.Identity);
 
+            //Load basic OpenGL state
+            //Bind the font shader
+            this.fontShader.Bind();
+            //Bind our VBO
+            this.vbo.Bind();
+
+            this.textureAtlas = new Graphics.Texture("C:\\Users\\Nick\\Source\\Repos\\ConsoleTextRenderer\\ConsoleTextRenderer\\ConsoleTextRenderer\\bin\\Debug\\alphabet_production_32bpp.bmp");
+            this.textureAtlas.MakeActive(OpenTK.Graphics.OpenGL.TextureUnit.Texture0);
+            ErrorCode e0 = GL.GetError();
+            this.textureAtlas.Bind();
+            ErrorCode e1 = GL.GetError();
+            this.fontShader.UploadTexture("textureAtlas", 0);
+            ErrorCode e2 = GL.GetError();
+
             //Debugging incoming
             Misc.Misc.AssertGLError();
         }
@@ -84,6 +103,7 @@ namespace ConsoleTextRenderer.Render
         {
             this.vbo.Release();
             this.fontShader.Release();
+            this.textureAtlas.Release();
         }
 
         //Get our Vertex Buffer Object (but really its just a BufferObject)
