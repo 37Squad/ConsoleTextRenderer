@@ -33,5 +33,16 @@ namespace ConsoleTextRenderer.Graphics
             OpenTK.Matrix4 copy = this.stack.Pop();
             this.stack.Push(OpenTK.Matrix4.Mult(copy, mat));
         }
+
+        //Pushes previous matrix onto the stack
+        public void Push()
+        {
+            if (this.stack.Count < 1) return;
+            else
+            {
+                this.stack.Push(this.stack.Peek());
+            }
+           
+        }
     }
 }

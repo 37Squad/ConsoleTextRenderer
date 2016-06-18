@@ -29,8 +29,8 @@ namespace ConsoleTextRenderer.Systems
         //image dimension shouldn't be changed...
         public float glyphMapWidth = 512.0F;
         public float glyphMapHeight = 512.0F;
-        public float glyphWidth  = 1.0f;
-        public float glyphHeight = 1.0f;
+        public float glyphWidth  = 0.03125f;
+        public float glyphHeight = 0.03125f;
 
         //Constructor
         public GlyphManager(int lines,int characters)
@@ -38,8 +38,8 @@ namespace ConsoleTextRenderer.Systems
             this.glyphs = new Glyph[lines,characters];
             this.maxCharacters  = characters;
             this.maxLines       = lines;
-            this.glyphWidth /= 2 * this.maxCharacters;
-            this.glyphHeight = this.glyphWidth;
+            //this.glyphWidth /= 2 * this.maxCharacters;
+            //this.glyphHeight = this.glyphWidth;
             this.ClearGlpyhs();
         }
 
@@ -110,9 +110,11 @@ namespace ConsoleTextRenderer.Systems
                     this.glyphLine = 0;
                 }
             }
-
-            this.glyphs[glyphLine, glyphPos] = glyph;
-            glyphPos++;
+            else
+            {
+                this.glyphs[glyphLine, glyphPos] = glyph;
+                glyphPos++;
+            }
         }
     }
 }
