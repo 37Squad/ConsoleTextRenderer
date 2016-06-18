@@ -53,10 +53,10 @@ namespace ConsoleTextRenderer.Render
                         v1 = currentGlyph.V0;
 
                         u2 = currentGlyph.U0;
-                        v2 = currentGlyph.V0 - glyphManager.glyphUVHeight;
+                        v2 = currentGlyph.V0 + glyphManager.glyphUVHeight;
 
                         u3 = currentGlyph.U0 + glyphManager.glyphUVWidth;
-                        v3 = currentGlyph.V0 - glyphManager.glyphUVHeight;
+                        v3 = currentGlyph.V0 + glyphManager.glyphUVHeight;
 
                         //Create a Quad
                         engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 0.0f, 0.0f, u0, v0, 1.0f, 1.0f, 1.0f, 1.0f));
@@ -78,7 +78,7 @@ namespace ConsoleTextRenderer.Render
                         engine.modelStack.Push();
 
                         //Scale based on glyph width and height, even though this isn't really a glyph
-                        engine.modelStack.Multiply(OpenTK.Matrix4.CreateRotationZ(OpenTK.MathHelper.DegreesToRadians(-90.0f)));
+                        //engine.modelStack.Multiply(OpenTK.Matrix4.CreateRotationZ(OpenTK.MathHelper.DegreesToRadians(-90.0f)));
 
                         engine.modelStack.Multiply(OpenTK.Matrix4.CreateScale(glyphManager.glyphWidth, glyphManager.glyphHeight, 1.0f));
 
