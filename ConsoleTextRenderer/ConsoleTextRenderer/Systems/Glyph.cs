@@ -14,7 +14,7 @@ namespace ConsoleTextRenderer.Systems
         public static Glyph GLYPH_EMPTY = new Glyph(0.5f, 0.5f);
         public static Glyph GLYPH_NULL  = new Glyph(-1.0f,-1.0f);
 
-        public static Glyph GLYPH_A = new Glyph(0.0f, 0.0f);
+        public static Glyph GLYPH_A = new Glyph(1.0f, 1.0f);
         public static Glyph GLYPH_B = new Glyph(0.03125f, 0.0f);
         public static Glyph GLYPH_C = new Glyph(0.0625f, 0.0f);
         public static Glyph GLYPH_D = new Glyph(0.09375f, 0.0f);

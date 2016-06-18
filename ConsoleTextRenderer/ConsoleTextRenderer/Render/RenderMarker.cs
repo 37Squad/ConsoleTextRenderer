@@ -35,8 +35,8 @@ namespace ConsoleTextRenderer.Render
             float offsetX = 0.0f;
             float offsetY = 0.0f;
 
-            offsetX = (float)(marker.GetGlyphManagerRef().GetPosition()) * marker.GetGlyphManagerRef().glyphWidth;
-            offsetY = -(float)(marker.GetGlyphManagerRef().GetLine()) * marker.GetGlyphManagerRef().glyphHeight;
+            offsetX = (float)(marker.GetGlyphManagerRef().GetPosition()) * marker.GetGlyphManagerRef().glyphWidth * 2;
+            offsetY = -(float)(marker.GetGlyphManagerRef().GetLine()) * marker.GetGlyphManagerRef().glyphHeight * 2;
             
             //Push previous matrix - it should be identity
             engine.modelStack.Push();

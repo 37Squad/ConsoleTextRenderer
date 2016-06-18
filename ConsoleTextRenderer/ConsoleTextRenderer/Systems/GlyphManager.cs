@@ -24,8 +24,8 @@ namespace ConsoleTextRenderer.Systems
         private int maxCharacters = 0;
 
         //Pixels / image dimension
-        public const float glyphUVWidth = 16.0f / 512.0f;
-        public const float glyphUVHeight = 16.0f / 512.0f;
+        public float glyphUVWidth = 16.0f / 512.0f;
+        public float glyphUVHeight = 16.0f / 512.0f;
         //image dimension shouldn't be changed...
         public float glyphMapWidth = 512.0F;
         public float glyphMapHeight = 512.0F;

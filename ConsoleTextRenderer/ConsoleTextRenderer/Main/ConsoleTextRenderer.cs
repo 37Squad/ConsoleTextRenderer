@@ -51,7 +51,7 @@ namespace ConsoleTextRenderer
             this.window.Closed      += this.Close;
 
             //Create our Glyph Manager
-            this.glyphManager = new GlyphManager(32,56);
+            this.glyphManager = new GlyphManager(16,30);
             //Our Render Engine from which all rendering capabilities are derived from
             this.renderEngine = new RenderEngine(4096);
             //Render Queue - Assemble!
