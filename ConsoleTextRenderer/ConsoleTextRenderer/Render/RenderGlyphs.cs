@@ -49,14 +49,14 @@ namespace ConsoleTextRenderer.Render
                         u0 = currentGlyph.U0;
                         v0 = currentGlyph.V0;
 
-                        u1 = currentGlyph.U0 + glyphManager.glyphUVWidth;
+                        u1 = currentGlyph.U0 + Systems.GlyphManager.glyphUVWidth;
                         v1 = currentGlyph.V0;
 
                         u2 = currentGlyph.U0;
-                        v2 = currentGlyph.V0 + glyphManager.glyphUVHeight;
+                        v2 = currentGlyph.V0 + Systems.GlyphManager.glyphUVHeight;
 
-                        u3 = currentGlyph.U0 + glyphManager.glyphUVWidth;
-                        v3 = currentGlyph.V0 + glyphManager.glyphUVHeight;
+                        u3 = currentGlyph.U0 + Systems.GlyphManager.glyphUVWidth;
+                        v3 = currentGlyph.V0 + Systems.GlyphManager.glyphUVHeight;
 
                         //Create a Quad
                         engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 0.0f, 0.0f, u0, v0, 1.0f, 1.0f, 1.0f, 1.0f));
@@ -71,8 +71,8 @@ namespace ConsoleTextRenderer.Render
                         float offsetX = 0.0f;
                         float offsetY = 0.0f;
 
-                        offsetX = position * glyphManager.glyphWidth * 2;
-                        offsetY = -line * glyphManager.glyphHeight * 2;
+                        offsetX = position * Systems.GlyphManager.glyphWidth * 2;
+                        offsetY = -line * Systems.GlyphManager.glyphHeight * 2;
 
                         //Push previous matrix - it should be identity
                         engine.modelStack.Push();
@@ -80,10 +80,10 @@ namespace ConsoleTextRenderer.Render
                         //Scale based on glyph width and height, even though this isn't really a glyph
                         //engine.modelStack.Multiply(OpenTK.Matrix4.CreateRotationZ(OpenTK.MathHelper.DegreesToRadians(-90.0f)));
 
-                        engine.modelStack.Multiply(OpenTK.Matrix4.CreateScale(glyphManager.glyphWidth, glyphManager.glyphHeight, 1.0f));
+                        engine.modelStack.Multiply(OpenTK.Matrix4.CreateScale(Systems.GlyphManager.glyphWidth, Systems.GlyphManager.glyphHeight, 1.0f));
 
                         //Translate so that we are now in the upper left hand corner to start
-                        engine.modelStack.Multiply(OpenTK.Matrix4.CreateTranslation(-1.0f + glyphManager.glyphWidth, 1.0f - glyphManager.glyphHeight, 0.0f));
+                        engine.modelStack.Multiply(OpenTK.Matrix4.CreateTranslation(-1.0f + Systems.GlyphManager.glyphWidth, 1.0f - Systems.GlyphManager.glyphHeight, 0.0f));
 
                         //Translate based on character position and line position
                         engine.modelStack.Multiply(OpenTK.Matrix4.CreateTranslation(offsetX, offsetY, 0.0f));

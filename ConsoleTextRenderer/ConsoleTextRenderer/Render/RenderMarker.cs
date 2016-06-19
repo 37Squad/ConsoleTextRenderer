@@ -35,15 +35,15 @@ namespace ConsoleTextRenderer.Render
             float offsetX = 0.0f;
             float offsetY = 0.0f;
 
-            offsetX = (float)(marker.GetGlyphManagerRef().GetPosition()) * marker.GetGlyphManagerRef().glyphWidth * 2;
-            offsetY = -(float)(marker.GetGlyphManagerRef().GetLine()) * marker.GetGlyphManagerRef().glyphHeight * 2;
+            offsetX = (float)(marker.GetGlyphManagerRef().GetPosition()) * Systems.GlyphManager.glyphWidth * 2;
+            offsetY = -(float)(marker.GetGlyphManagerRef().GetLine()) * Systems.GlyphManager.glyphHeight * 2;
             
             //Push previous matrix - it should be identity
             engine.modelStack.Push();
             //Scale based on glyph width and height, even though this isn't really a glyph
-            engine.modelStack.Multiply(OpenTK.Matrix4.CreateScale(marker.GetGlyphManagerRef().glyphWidth,marker.GetGlyphManagerRef().glyphHeight,1.0f));
+            engine.modelStack.Multiply(OpenTK.Matrix4.CreateScale(Systems.GlyphManager.glyphWidth, Systems.GlyphManager.glyphHeight,1.0f));
             //Translate so that we are now in the upper left hand corner to start
-            engine.modelStack.Multiply(OpenTK.Matrix4.CreateTranslation(-1.0f + marker.GetGlyphManagerRef().glyphWidth,1.0f - marker.GetGlyphManagerRef().glyphHeight,0.0f));
+            engine.modelStack.Multiply(OpenTK.Matrix4.CreateTranslation(-1.0f + Systems.GlyphManager.glyphWidth,1.0f - Systems.GlyphManager.glyphHeight,0.0f));
             //Translate based on character position and line position
             engine.modelStack.Multiply(OpenTK.Matrix4.CreateTranslation(offsetX,offsetY,0.0f));
             //Upload Uniforms

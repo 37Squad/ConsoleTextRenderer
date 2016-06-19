@@ -11,74 +11,103 @@ namespace ConsoleTextRenderer.Systems
         //Add all of the UV data we need for each glyph in LoadGlyphData
         //Alpha-numeric glpyhs
         //Should make a square for this! Right now it is in the middle of nowhere
+        private static int uCtr = 0, vCtr = 0;
+        
         public static Glyph GLYPH_EMPTY = new Glyph(0.5f, 0.5f);
         public static Glyph GLYPH_NULL  = new Glyph(-1.0f,-1.0f);
 
-        public static Glyph GLYPH_A = new Glyph(0.0f,0.0f);
-        public static Glyph GLYPH_B = new Glyph(0.03125f, 0.0f);
-        public static Glyph GLYPH_C = new Glyph(0.0625f, 0.0f);
-        public static Glyph GLYPH_D = new Glyph(0.09375f, 0.0f);
-        public static Glyph GLYPH_E = new Glyph(0.125f, 0.0f);
-        public static Glyph GLYPH_F = new Glyph(0.15625f, 0.0f);
-        public static Glyph GLYPH_G = new Glyph(0.1875f, 0.0f);
-        public static Glyph GLYPH_H = new Glyph(0.21875f, 0.0f);
-        public static Glyph GLYPH_I;
-        public static Glyph GLYPH_J;
-        public static Glyph GLYPH_K;
-        public static Glyph GLYPH_L;
-        public static Glyph GLYPH_M;
-        public static Glyph GLYPH_N;
-        public static Glyph GLYPH_O;
-        public static Glyph GLYPH_P;
-        public static Glyph GLYPH_Q;
-        public static Glyph GLYPH_R;
-        public static Glyph GLYPH_S;
-        public static Glyph GLYPH_T;
-        public static Glyph GLYPH_U;
-        public static Glyph GLYPH_V;
-        public static Glyph GLYPH_W;
-        public static Glyph GLYPH_X;
-        public static Glyph GLYPH_Y;
-        public static Glyph GLYPH_Z;
+        public static Glyph GLYPH_A = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_B = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_C = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_D = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_E = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_F = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_G = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_H = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_I = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_J = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_K = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_L = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_M = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_N = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_O = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_P = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_Q = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_R = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_S = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_T = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_U = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_V = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_W = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_X = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_Y = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_Z = new Glyph(AdvanceU(), AdvanceV());
 
-        public static Glyph GLYPH_a;
-        public static Glyph GLYPH_b;
-        public static Glyph GLYPH_c;
-        public static Glyph GLYPH_d;
-        public static Glyph GLYPH_e;
-        public static Glyph GLYPH_f;
-        public static Glyph GLYPH_g;
-        public static Glyph GLYPH_h;
-        public static Glyph GLYPH_i;
-        public static Glyph GLYPH_j;
-        public static Glyph GLYPH_k;
-        public static Glyph GLYPH_l;
-        public static Glyph GLYPH_m;
-        public static Glyph GLYPH_n;
-        public static Glyph GLYPH_o;
-        public static Glyph GLYPH_p;
-        public static Glyph GLYPH_q;
-        public static Glyph GLYPH_r;
-        public static Glyph GLYPH_s;
-        public static Glyph GLYPH_t;
-        public static Glyph GLYPH_u;
-        public static Glyph GLYPH_v;
-        public static Glyph GLYPH_w;
-        public static Glyph GLYPH_x;
-        public static Glyph GLYPH_y;
-        public static Glyph GLYPH_z;
+        public static Glyph GLYPH_a = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_b = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_c = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_d = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_e = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_f = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_g = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_h = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_i = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_j = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_k = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_l = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_m = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_n = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_o = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_p = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_q = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_r = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_s = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_t = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_u = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_v = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_w = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_x = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_y = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_z = new Glyph(AdvanceU(), AdvanceV());
 
-        public static Glyph GLYPH_0;
-        public static Glyph GLYPH_1;
-        public static Glyph GLYPH_2;
-        public static Glyph GLYPH_3;
-        public static Glyph GLYPH_4;
-        public static Glyph GLYPH_5;
-        public static Glyph GLYPH_6;
-        public static Glyph GLYPH_7;
-        public static Glyph GLYPH_8;
-        public static Glyph GLYPH_9;
+        public static Glyph GLYPH_0 = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_1 = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_2 = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_3 = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_4 = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_5 = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_6 = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_7 = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_8 = new Glyph(AdvanceU(), GetV());
+        public static Glyph GLYPH_9 = new Glyph(AdvanceU(), GetV());
         //Special glyphs?
+
+        //VERY DIRTY
+        //Should really lookup 
+        private static float AdvanceU()
+        {
+            float result = uCtr * GlyphManager.glyphUVWidth;
+            uCtr++;
+            return result;
+        }
+
+        private static float AdvanceV()
+        {
+            float result =  0.0f + (float)vCtr * GlyphManager.glyphUVHeight;
+            vCtr++;
+            uCtr = 0;
+            return result;
+        }
+
+        private static float GetU()
+        {
+            return (float)uCtr * GlyphManager.glyphUVWidth;
+        }
+
+        private static float GetV()
+        {
+            return (float)vCtr * GlyphManager.glyphUVHeight;
+        }
 
         public float U0 = 0.0F;
         public float V0 = 0.0F;

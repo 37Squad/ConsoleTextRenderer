@@ -24,13 +24,13 @@ namespace ConsoleTextRenderer.Systems
         private int maxCharacters = 0;
 
         //Pixels / image dimension
-        public float glyphUVWidth = 16.0f / 512.0f;
-        public float glyphUVHeight = 16.0f / 512.0f;
+        public static float glyphUVWidth = 16.0f / 512.0f;
+        public static float glyphUVHeight = 16.0f / 512.0f;
         //image dimension shouldn't be changed...
-        public float glyphMapWidth = 512.0F;
-        public float glyphMapHeight = 512.0F;
-        public float glyphWidth  = 0.03125f;
-        public float glyphHeight = 0.03125f;
+        public static float glyphMapWidth = 512.0F;
+        public static float glyphMapHeight = 512.0F;
+        public static float glyphWidth  = 0.03125f;
+        public static float glyphHeight = 0.03125f;
 
         //Constructor
         public GlyphManager(int lines,int characters)
@@ -77,6 +77,11 @@ namespace ConsoleTextRenderer.Systems
             return this.glyphs;
         }
 
+        public void GlyphBackspace()
+        {
+           
+        }
+
         //Reset all glyphs
         public void ClearGlpyhs()
         {
@@ -108,6 +113,11 @@ namespace ConsoleTextRenderer.Systems
                     this.ClearGlpyhs();
                     this.glyphPos = 0;
                     this.glyphLine = 0;
+                }
+                else
+                {
+                    this.glyphs[glyphLine, glyphPos] = glyph;
+                    glyphPos++;
                 }
             }
             else

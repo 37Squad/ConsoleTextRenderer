@@ -95,6 +95,7 @@ namespace ConsoleTextRenderer
         //Called every frame; update logic here
         private void Update(object sender, object param)
         {
+            //Update Maker Logic
             this.marker.Update();
         }
 
@@ -124,180 +125,359 @@ namespace ConsoleTextRenderer
             GL.Viewport(new Rectangle(0, 0, this.window.Width, this.window.Height));
         }
 
+        //Deprecated in favor of State-based keyboard input
+        //LOL NEVERMIND
         private void KeyboardKeyUp(object sender, KeyboardKeyEventArgs param)
         {
-            switch(param.Key)
-            {
+           switch(param.Key)
+           {
                 case Key.Escape:
                     {
                         this.window.Close();
                         break;
                     }
-
-                case Key.AltLeft:
-                    {
-                        this.glyphManager.ClearGlpyhs();
-                        break;
-                    }
-
+                 
                 case Key.A:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_A);
+                        if(param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_A);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_a);
+                        }
                         break;
                     }
 
                 case Key.B:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_B);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_B);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_b);
+                        }
                         break;
                     }
 
                 case Key.C:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_C);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_C);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_c);
+                        }
                         break;
                     }
 
                 case Key.D:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_D);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_D);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_d);
+                        }
                         break;
                     }
 
                 case Key.E:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_E);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_E);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_e);
+                        }
                         break;
                     }
 
                 case Key.F:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_F);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_F);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_f);
+                        }
                         break;
                     }
 
                 case Key.G:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_G);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_G);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_g);
+                        }
                         break;
                     }
 
                 case Key.H:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_H);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_H);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_h);
+                        }
                         break;
                     }
 
                 case Key.I:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_I);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_I);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_i);
+                        }
                         break;
                     }
 
                 case Key.J:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_J);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_J);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_j);
+                        }
                         break;
                     }
 
                 case Key.K:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_K);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_K);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_k);
+                        }
                         break;
                     }
 
                 case Key.L:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_L);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_L);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_l);
+                        }
                         break;
                     }
 
                 case Key.M:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_M);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_M);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_m);
+                        }
                         break;
                     }
 
                 case Key.N:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_N);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_N);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_n);
+                        }
                         break;
                     }
 
                 case Key.O:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_O);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_O);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_o);
+                        }
                         break;
                     }
 
                 case Key.P:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_P);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_P);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_p);
+                        }
                         break;
                     }
 
                 case Key.Q:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_Q);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_Q);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_q);
+                        }
                         break;
                     }
 
                 case Key.R:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_R);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_R);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_r);
+                        }
                         break;
                     }
 
                 case Key.S:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_S);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_S);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_s);
+                        }
                         break;
                     }
 
                 case Key.T:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_T);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_T);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_t);
+                        }
                         break;
                     }
 
                 case Key.U:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_U);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_U);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_u);
+                        }
                         break;
                     }
 
                 case Key.V:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_V);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_V);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_v);
+                        }
                         break;
                     }
 
                 case Key.W:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_W);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_W);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_w);
+                        }
                         break;
                     }
 
                 case Key.X:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_X);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_X);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_x);
+                        }
                         break;
                     }
 
                 case Key.Y:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_Y);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_Y);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_y);
+                        }
                         break;
                     }
 
                 case Key.Z:
                     {
-                        this.glyphManager.WriteGlyph(Glyph.GLYPH_Z);
+                        if (param.Shift)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_Z);
+                        }
+                        else
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_z);
+                        }
                         break;
                     }
 
+
                 default: break;
-            }
+           }
         }
 
         private void Close(object sender,object args)
