@@ -19,7 +19,7 @@ namespace ConsoleTextRenderer.Render
             Render_Font(ref engine, (Systems.GlyphManager)renderable);
         }
 
-        private static void Render_Font(ref Render.RenderEngine engine, Systems.GlyphManager glyphManager)
+        private static void Render_Font(ref Render.RenderEngine engine,Systems.GlyphManager glyphManager)
         {
             //Bind shader
             engine.GetFontShader().Bind();

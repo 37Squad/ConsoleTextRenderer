@@ -77,9 +77,39 @@ namespace ConsoleTextRenderer.Systems
             return this.glyphs;
         }
 
+        //Backspace
         public void GlyphBackspace()
         {
-           
+           if(this.glyphPos == 0 && this.glyphLine == 0)
+            {
+                this.glyphs[0, 0] = Glyph.GLYPH_NULL;
+                return;
+            }
+           else
+            {
+                if(this.glyphPos == 0)
+                {
+                    this.glyphLine--;
+                    this.glyphPos = this.maxCharacters - 1;
+                    this.glyphs[this.glyphLine, this.glyphPos] = Glyph.GLYPH_NULL;
+                }
+                else
+                {
+                    this.glyphPos--;
+                    this.glyphs[this.glyphLine, this.glyphPos] = Glyph.GLYPH_NULL;
+                }
+            }
+        }
+
+        //Enter key
+        public void GlyphEnter()
+        {
+            this.glyphLine++;
+            this.glyphPos = 0;
+            if(this.glyphLine >= this.maxLines)
+            {
+                this.ClearGlpyhs();
+            }
         }
 
         //Reset all glyphs

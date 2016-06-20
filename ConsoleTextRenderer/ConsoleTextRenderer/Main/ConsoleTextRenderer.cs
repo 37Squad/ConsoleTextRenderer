@@ -136,6 +136,40 @@ namespace ConsoleTextRenderer
                         this.window.Close();
                         break;
                     }
+
+                case Key.BackSpace:
+                    {
+                        this.glyphManager.GlyphBackspace();
+                        break;
+                    }
+
+                case Key.Space:
+                    {
+                        this.glyphManager.WriteGlyph(Glyph.GLYPH_EMPTY);
+                        break;
+                    }
+
+                case Key.Delete:
+                    {
+                        this.glyphManager.ClearGlpyhs();
+                        break;
+                    }
+
+                case Key.Tab:
+                    {
+                        for(int i = 0; i < 5;i++)
+                        {
+                            this.glyphManager.WriteGlyph(Glyph.GLYPH_EMPTY);
+                        }
+
+                        break;
+                    }
+
+                case Key.Enter:
+                    {
+                        this.glyphManager.GlyphEnter();
+                        break;
+                    }
                  
                 case Key.A:
                     {
