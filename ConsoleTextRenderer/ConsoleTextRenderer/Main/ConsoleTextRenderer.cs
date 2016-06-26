@@ -31,6 +31,8 @@ namespace ConsoleTextRenderer
         private RenderEngine renderEngine = null;
         //Marker
         private Marker marker = null;
+        //CommandQueue
+        private CommandQueue commandQueue = null;
        
         public ConsoleTextRenderer(int x,int y, int width, int height,int refreshRate)
         {
@@ -62,6 +64,14 @@ namespace ConsoleTextRenderer
             this.renderQueue.AddPair(this.glyphManager, Render.RenderGlyphs.Render_Font_Object);
             //And now add our Marker
             this.renderQueue.AddPair(this.marker, Render.RenderMarker.Render_Marker_Object);
+
+            //Create command queue
+            this.commandQueue = new CommandQueue();
+            //Add a command
+            this.commandQueue.AddCommand("cls", (String[] parameters) =>
+             {
+                 this.glyphManager.ClearGlpyhs();
+             });
 
             //Start it up!
             this.window.Run(refreshRate);
@@ -167,6 +177,7 @@ namespace ConsoleTextRenderer
 
                 case Key.Enter:
                     {
+                        this.commandQueue.TryProcessLine(this.glyphManager.GlyphArrayToString(this.glyphManager.Slice(this.glyphManager.GetLine(), this.glyphManager.GetMaxCharacters())));
                         this.glyphManager.GlyphEnter();
                         break;
                     }

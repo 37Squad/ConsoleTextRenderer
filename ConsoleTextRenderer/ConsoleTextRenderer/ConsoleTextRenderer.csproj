@@ -80,6 +80,7 @@
     <Compile Include="Misc\Misc.cs" />
     <Compile Include="Render\RenderEngine.cs" />
     <Compile Include="Render\RenderMarker.cs" />
+    <Compile Include="Systems\CommandQueue.cs" />
     <Compile Include="Systems\Glyph.cs" />
     <Compile Include="Systems\GlyphManager.cs" />
     <Compile Include="Main\ConsoleTextRenderer.cs" />
