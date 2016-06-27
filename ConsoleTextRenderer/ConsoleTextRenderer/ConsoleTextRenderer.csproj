@@ -98,6 +98,8 @@
     <None Include="Graphics\Shaders\Font\vertex_shader.glsl" />
     <None Include="Graphics\Shaders\Marker\fragment_shader.glsl" />
     <None Include="Graphics\Shaders\Marker\vertex_shader.glsl" />
+    <None Include="Graphics\Shaders\ScreenFlicker\fragment_shader.glsl" />
+    <None Include="Graphics\Shaders\ScreenFlicker\vertex_shader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

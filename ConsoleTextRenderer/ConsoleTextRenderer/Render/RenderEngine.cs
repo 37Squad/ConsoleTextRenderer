@@ -22,6 +22,7 @@ namespace ConsoleTextRenderer.Render
         public Graphics.MatrixStack viewStack       = null;
 
         public Graphics.Texture textureAtlas        = null;
+        public Graphics.Texture flickerMask         = null;
 
         public List<Graphics.VertexBufferData> client_vbo_data;
 
@@ -75,6 +76,9 @@ namespace ConsoleTextRenderer.Render
             //Marker Shader
             this.markerShader = new Graphics.Shader("C:\\Users\\Nick\\Source\\Repos\\ConsoleTextRenderer\\ConsoleTextRenderer\\ConsoleTextRenderer\\Graphics\\Shaders\\Marker");
 
+            //Flicker Mask
+          
+
             //Create a list which we can use to upload our client data to the server
             this.client_vbo_data = new List<Graphics.VertexBufferData>();
 
@@ -93,6 +97,10 @@ namespace ConsoleTextRenderer.Render
             this.textureAtlas.MakeActive(OpenTK.Graphics.OpenGL.TextureUnit.Texture0);
             this.textureAtlas.Bind();
             this.fontShader.UploadTexture("textureAtlas", 0);
+
+            //this.textureAtlas = new Graphics.Texture("C:\\Users\\Nick\\Source\\Repos\\ConsoleTextRenderer\\ConsoleTextRenderer\\ConsoleTextRenderer\\bin\\Debug\\SCREEN_FLICKER_MASK.bmp");
+            //this.textureAtlas.MakeActive(OpenTK.Graphics.OpenGL.TextureUnit.Texture0);
+            //this.textureAtlas.Bind();
 
             GL.Enable(EnableCap.DepthTest);
 
