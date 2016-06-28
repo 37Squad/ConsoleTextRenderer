@@ -31,6 +31,9 @@ namespace ConsoleTextRenderer
         private RenderEngine renderEngine = null;
         //Marker
         private Marker marker = null;
+        //Screen Flicker... lol
+        private Flicker flicker = null;
+
         //CommandQueue
         private CommandQueue commandQueue = null;
        
@@ -52,6 +55,9 @@ namespace ConsoleTextRenderer
             this.window.KeyUp       += this.KeyboardKeyUp;
             this.window.Closed      += this.Close;
 
+            //Create... Flicker!
+            this.flicker = new Flicker();
+
             //Create our Glyph Manager
             this.glyphManager = new GlyphManager(16,30);
             //Our Render Engine from which all rendering capabilities are derived from
@@ -64,7 +70,8 @@ namespace ConsoleTextRenderer
             this.renderQueue.AddPair(this.glyphManager, Render.RenderGlyphs.Render_Font_Object);
             //And now add our Marker
             this.renderQueue.AddPair(this.marker, Render.RenderMarker.Render_Marker_Object);
-
+            //Add the 'Flicker' to the screen
+            this.renderQueue.AddPair(this.flicker, Render.RenderFlicker.Render_Flicker_Object);
             //Create command queue
             this.commandQueue = new CommandQueue();
             //Add a command
@@ -107,6 +114,7 @@ namespace ConsoleTextRenderer
         {
             //Update Maker Logic
             this.marker.Update();
+            this.flicker.Update();
         }
 
         //Called every frame; its only purpose is to draw

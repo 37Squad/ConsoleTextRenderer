@@ -44,7 +44,7 @@ namespace ConsoleTextRenderer.Systems
         public void TryProcessLine(String line)
         {
             //First element is command
-            String[] parameters = new String[3];
+            String[] parameters = new String[30];
             String dummyChar = String.Empty;
             int idx = 0;
           

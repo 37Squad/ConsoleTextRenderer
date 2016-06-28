@@ -18,26 +18,26 @@ namespace ConsoleTextRenderer.Graphics
         private int texture_pointer = 0;
         private bool bound          = false;
 
-        public Texture(String _filePath)
+        public Texture(String _filePath, System.Drawing.Imaging.PixelFormat format, PixelInternalFormat internalFormat, OpenTK.Graphics.OpenGL.PixelFormat openGLFormat)
         {
             this.filePath           = _filePath;
             this.texture_pointer    = GL.GenTexture();
             this.bound              = false;
-            this.LoadTexture();
+            this.LoadTexture(format,internalFormat,openGLFormat);
         }
 
         //Called in constructor
-        private void LoadTexture()
+        private void LoadTexture(System.Drawing.Imaging.PixelFormat format, PixelInternalFormat internalFormat, OpenTK.Graphics.OpenGL.PixelFormat openGLFormat)
         {
             Bitmap bitmap = new Bitmap(this.filePath);
-            BitmapData bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            BitmapData bmpData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, format);
 
             this.Bind();
 
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
 
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba8, bmpData.Width, bmpData.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmpData.Scan0);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, internalFormat, bmpData.Width, bmpData.Height, 0, openGLFormat, PixelType.UnsignedByte, bmpData.Scan0);
 
             this.Unbind();
 

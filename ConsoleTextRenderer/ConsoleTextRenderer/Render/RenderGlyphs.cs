@@ -28,7 +28,6 @@ namespace ConsoleTextRenderer.Render
 
             engine.textureAtlas.MakeActive(OpenTK.Graphics.OpenGL.TextureUnit.Texture0);
             engine.textureAtlas.Bind();
-            engine.GetFontShader().UploadTexture("textureAtlas", 0);
 
             float u0, v0, u1, v1, u2, v2, u3, v3;
 
@@ -59,13 +58,13 @@ namespace ConsoleTextRenderer.Render
                         v3 = currentGlyph.V0 + Systems.GlyphManager.glyphUVHeight;
 
                         //Create a Quad
-                        engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 0.0f, 0.0f, u0, v0, 1.0f, 1.0f, 1.0f, 1.0f));
-                        engine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, 0.0f, u1, v1, 1.0f, 1.0f, 1.0f, 1.0f));
-                        engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, 0.0f, u2, v2, 1.0f, 1.0f, 1.0f, 1.0f));
+                        engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 0.0f, -1.0f, u0, v0, 1.0f, 1.0f, 1.0f, 1.0f));
+                        engine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, -1.0f, u1, v1, 1.0f, 1.0f, 1.0f, 1.0f));
+                        engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, -1.0f, u2, v2, 1.0f, 1.0f, 1.0f, 1.0f));
 
-                        engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, 0.0f, u2, v2, 1.0f, 1.0f, 1.0f, 1.0f));
-                        engine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 1.0f, 0.0f, u3, v3, 1.0f, 1.0f, 1.0f, 1.0f));
-                        engine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, 0.0f, u1, v1, 1.0f, 1.0f, 1.0f, 1.0f));
+                        engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, -1.0f, u2, v2, 1.0f, 1.0f, 1.0f, 1.0f));
+                        engine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 1.0f, -1.0f, u3, v3, 1.0f, 1.0f, 1.0f, 1.0f));
+                        engine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, -1.0f, u1, v1, 1.0f, 1.0f, 1.0f, 1.0f));
 
                         //Translate our Marker based on where the next glyph will be placed
                         float offsetX = 0.0f;

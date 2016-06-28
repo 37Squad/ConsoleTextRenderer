@@ -22,14 +22,17 @@ namespace ConsoleTextRenderer.Render
             engine.GetMarkerShader().Bind();
             engine.GetVBO().Bind();
 
-            //Create a Quad
-            engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 0.0f, 0.0f, 0.3125f, 0.0625f, 1.0f, 1.0f, 1.0f, 1.0f));
-            engine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, 0.0f, 0.34375f, 0.0625f, 1.0f, 1.0f, 1.0f, 1.0f));
-            engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, 0.0f, 0.3125f, 0.09375f, 1.0f, 1.0f, 1.0f, 1.0f));
+            engine.textureAtlas.MakeActive(OpenTK.Graphics.OpenGL.TextureUnit.Texture0);
+            engine.textureAtlas.Bind();
 
-            engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, 0.0f, 0.3125f, 0.09375f, 1.0f, 1.0f, 1.0f, 1.0f));
-            engine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 1.0f, 0.0f, 0.34375f, 0.09375f, 1.0f, 1.0f, 1.0f, 1.0f));
-            engine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, 0.0f, 0.34375f, 0.0625f, 1.0f, 1.0f, 1.0f, 1.0f));
+            //Create a Quad
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 0.0f, -0.5f, 0.3125f, 0.0625f, 1.0f, 1.0f, 1.0f, 1.0f));
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, -0.5f, 0.34375f, 0.0625f, 1.0f, 1.0f, 1.0f, 1.0f));
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, -0.5f, 0.3125f, 0.09375f, 1.0f, 1.0f, 1.0f, 1.0f));
+
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData(0.0f, 1.0f, -0.5f, 0.3125f, 0.09375f, 1.0f, 1.0f, 1.0f, 1.0f));
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 1.0f, -0.5f, 0.34375f, 0.09375f, 1.0f, 1.0f, 1.0f, 1.0f));
+            engine.client_vbo_data.Add(new Graphics.VertexBufferData(1.0f, 0.0f, -0.5f, 0.34375f, 0.0625f, 1.0f, 1.0f, 1.0f, 1.0f));
 
             //Translate our Marker based on where the next glyph will be placed
             float offsetX = 0.0f;

@@ -16,6 +16,7 @@ namespace ConsoleTextRenderer.Render
         private Graphics.VertexBufferLayout[] vertex_layout;
         private Graphics.Shader fontShader = null;
         private Graphics.Shader markerShader = null;
+        private Graphics.Shader flickerShader = null;
 
         public Graphics.MatrixStack modelStack      = null;
         public Graphics.MatrixStack projectionStack = null;
@@ -76,8 +77,8 @@ namespace ConsoleTextRenderer.Render
             //Marker Shader
             this.markerShader = new Graphics.Shader("C:\\Users\\Nick\\Source\\Repos\\ConsoleTextRenderer\\ConsoleTextRenderer\\ConsoleTextRenderer\\Graphics\\Shaders\\Marker");
 
-            //Flicker Mask
-          
+            //Flicker Shader
+            this.flickerShader = new Graphics.Shader("C:\\Users\\Nick\\Source\\Repos\\ConsoleTextRenderer\\ConsoleTextRenderer\\ConsoleTextRenderer\\Graphics\\Shaders\\ScreenFlicker");
 
             //Create a list which we can use to upload our client data to the server
             this.client_vbo_data = new List<Graphics.VertexBufferData>();
@@ -93,16 +94,21 @@ namespace ConsoleTextRenderer.Render
             //Bind our VBO
             this.vbo.Bind();
 
-            this.textureAtlas = new Graphics.Texture("C:\\Users\\Nick\\Source\\Repos\\ConsoleTextRenderer\\ConsoleTextRenderer\\ConsoleTextRenderer\\bin\\Debug\\alphabet_production_32bpp.bmp");
+            this.textureAtlas = new Graphics.Texture("C:\\Users\\Nick\\Source\\Repos\\ConsoleTextRenderer\\ConsoleTextRenderer\\ConsoleTextRenderer\\bin\\Debug\\alphabet_production_32bpp.bmp",System.Drawing.Imaging.PixelFormat.Format32bppArgb,PixelInternalFormat.Rgba8,PixelFormat.Bgra);
             this.textureAtlas.MakeActive(OpenTK.Graphics.OpenGL.TextureUnit.Texture0);
             this.textureAtlas.Bind();
             this.fontShader.UploadTexture("textureAtlas", 0);
 
-            //this.textureAtlas = new Graphics.Texture("C:\\Users\\Nick\\Source\\Repos\\ConsoleTextRenderer\\ConsoleTextRenderer\\ConsoleTextRenderer\\bin\\Debug\\SCREEN_FLICKER_MASK.bmp");
-            //this.textureAtlas.MakeActive(OpenTK.Graphics.OpenGL.TextureUnit.Texture0);
-            //this.textureAtlas.Bind();
+            this.flickerMask = new Graphics.Texture("C:\\Users\\Nick\\Source\\Repos\\ConsoleTextRenderer\\ConsoleTextRenderer\\ConsoleTextRenderer\\bin\\Debug\\ScreenNoise.bmp",System.Drawing.Imaging.PixelFormat.Format8bppIndexed,PixelInternalFormat.Luminance8,PixelFormat.Luminance);
+            this.flickerMask.MakeActive(TextureUnit.Texture0);
+            this.flickerMask.Bind();
+            this.flickerShader.Bind();
+            this.flickerShader.UploadTexture("flickerMask", 0);
 
             GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.Blend);
+            GL.Enable(EnableCap.AlphaTest);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 
             //Debugging incoming
             Misc.Misc.AssertGLError();
@@ -123,5 +129,7 @@ namespace ConsoleTextRenderer.Render
         public Graphics.Shader GetFontShader() { return this.fontShader; }
         //Get Marker shader
         public Graphics.Shader GetMarkerShader() { return this.markerShader; }
+        //Get Flicker Shader
+        public Graphics.Shader GetFlickerShader() { return this.flickerShader; }
     }
 }
